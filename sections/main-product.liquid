@@ -197,6 +197,21 @@
                     {{ product.description }}
                   </div>
                 {%- endif -%}
+                {% comment %} Added Model info block {% endcomment %}
+              {%- when 'model_info' -%}
+                {%- if product.metafields.model != blank -%}
+                  <div {{ block.shopify_attributes }}>
+                    <p>{{ product.metafields.model.model_info.value.name.value }} is {{ product.metafields.models.model_info.value.height | metafield_tag }}
+                      and wearing size {{ product.metafields.model.wearing_size.value }}.
+                    </p>
+                    <p>{{ product.metafields.model.model_info.value.name.value }}'s measurements: </p>
+                    <ul>
+                      <li>Bust: {{ product.metafields.model.model_info.value.bust | metafield_tag }}</li>
+                      <li>Waist: {{ product.metafields.model.model_info.value.waist | metafield_tag }}</li>
+                      <li>Hips: {{ product.metafields.model.model_info.value.hips | metafield_tag }}</li>
+                    </ul>
+                  </div>
+                  {%- endif -%}
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -931,6 +946,11 @@
     {
       "type": "description",
       "name": "t:sections.main-product.blocks.description.name",
+      "limit": 1
+    },
+    {
+      "type": "model_info",
+      "name": "t:sections.main-product.blocks.model_info.name",
       "limit": 1
     },
     {
