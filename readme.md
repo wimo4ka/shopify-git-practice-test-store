@@ -20,3 +20,12 @@ It serves as a modern, flexible, and customizable Shopify theme with a focus on 
 - HTML, CSS, JavaScript (Vanilla JS / ESNext)
 - Shopify CLI for local development
 - JSON Templates for Online Store 2.0
+
+## 4. Features Implemented
+
+- Full Online Store 2.0 support (sections everywhere)
+- Responsive layout with Grid & Flexbox
+- Theme settings (colors, typography, layout)
+- Accessible & SEO-friendly markup
+- Performance-optimized (minimal JS, lazy-loaded media)
+- Added a Model Info block to the Main-product section, which is rendered when a metaobject is assigned to the product.
