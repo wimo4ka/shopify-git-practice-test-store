@@ -2058,6 +2058,10 @@
             }
           }
         },
+        "model_info": {
+          "name": "Model info",
+          "settings": {}
+        },
         "collapsible_tab": {
           "name": "Collapsible row",
           "settings": {
