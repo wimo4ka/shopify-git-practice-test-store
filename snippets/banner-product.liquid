@@ -1,0 +1,347 @@
+{% comment %}
+  Universal Product Banner Snippet
+  Usage:
+  {% render 'banner-product', product: product %}
+{% endcomment %}
+
+<style>
+.banner-product {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 80px auto;
+}
+.product-image {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.product-image img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+  aspect-ratio: 1 / 1;
+  object-fit: cover
+}
+.product-image .badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #fff;
+  text-transform: capitalize;
+  border: none;
+  border-radius: 8px;
+}
+.option-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.color-thumbs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.color-thumb {
+  border: 2px solid transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 2px;
+}
+.color-thumb img {
+  display: block;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.color-thumb span {
+  display: block;
+  width: 80px;
+  height: 80px;
+}
+
+.color-thumb span {
+}
+
+.color-thumb.active {
+  border-color: #111111;
+}
+.size-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.size-btn {
+  padding: 16px;
+  font-size: 14px;
+  line-height: 20px;
+  border-radius: 8px;
+  border: 1px solid #EBEBEB;
+  background-color: #fff;
+  color: #111111;
+}
+.size-btn.active {
+  border-color: #000;
+}
+.price.product-price {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  margin: 16px 0;
+  color: #737373;
+}
+.stock {
+  font-size: 10px;
+  line-height: 14px;
+  margin-bottom: 16px;
+  color: #737373;
+}
+
+.product-description {
+    font-size: 14px;
+    line-height: 20px;
+    color: #737373;
+}
+
+.add-to-cart {
+  width: 100%;
+  padding: 16px 32px;
+  background-color: #111111;
+  color: #fff;
+  font-size: 16px;
+  line-height: 12px;
+  border-radius: 8px;
+}
+
+@media (max-width: 767px) {
+  .banner-product {
+    grid-template-columns: 1fr;
+    padding: 15px 27px;
+  }
+}
+</style>
+
+<div class="banner-product">
+
+  {% comment %} Product image {% endcomment %}
+  <div class="product-image">
+  {% if product.has_only_default_variant %}
+    {% if product.featured_image != blank %}
+      <img id="main-image"
+           src="{{ product.featured_image | image_url: width: 600  }}"
+           alt="{{ product.title }} "
+          loading="lazy">
+    {% else %}
+      <img id="main-image"
+           src="{{ 'no-image.svg' | asset_url }}"
+           alt="No image available"
+          loading="lazy">
+           
+    {% endif %}
+  {% else %}
+    {% if product.selected_or_first_available_variant.featured_image != blank %}
+      <img id="main-image" src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}">
+
+    {% elsif product.featured_image != blank %}
+      <img id="main-image"
+           src="{{ product.featured_image | image_url: width: 600 }}"
+           alt="{{ product.title }}"
+          loading="lazy">
+    {% else %}
+      <img id="main-image"
+           src="{{ 'no-image.svg' | asset_url }}"
+           alt="No image available">
+    {% endif %}
+  {% endif %}
+  <div class="badge">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 13.0721L7.11574 14.6666L7.66671 11.2895L5.33337 8.89805L8.55789 8.40571L10 5.33325L11.4422 8.40571L14.6667 8.89805L12.3334 11.2895L12.8843 14.6666L10 13.0721Z" fill="#111111" stroke="#111111" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="badge-text">{{ 'product.banner.badge_text' | t }}</span>
+  </div>
+</div>
+  {% comment %} Product form {% endcomment %}
+  <div>
+    {% if product.title != blank %}
+      <h1>{{ product.title }}</h1>
+    {% endif %}
+
+    {% capture product_price %}
+      {{ product.selected_or_first_available_variant.price | money }}
+    {% endcapture %}
+
+    <div class="price product-price" id="product-price">
+      {{ product_price }}
+    </div>
+
+    <div class="stock" id="product-stock">
+      {% if product.selected_or_first_available_variant.inventory_management != blank %}
+        {% if variant.inventory_quantity > 0 %}
+          {{ 'product.banner.in_stock' | t }}
+          {%else%}
+            {{ 'product.banner.not_available' | t }}
+          {% endif %}
+      {% else %}
+        {% if product.selected_or_first_available_variant.available %}{{ 'product.banner.in_stock' | t }}{% else %}{{ 'product.banner.not_available' | t }}{% endif %}
+      {% endif %}
+    </div>
+
+    {% form 'product', product %}
+
+      {% comment %} Assign of product options {% endcomment %}
+      {% for option in product.options_with_values%}
+        {% assign option_name = option.name | downcase  %}
+        {% case option_name %}
+          {% when 'color' or 'colour' or 'цвет' %}
+            {% assign color_option = option %}
+          {% when 'shoe size' or 'размер обуви' %}
+            {% assign size_option = option %}
+        {% endcase %}
+      {% endfor %}
+
+      {% comment %} Chose color {% endcomment %}
+      {% if color_option != blank %}
+        <label class="option-label">{{ 'product.banner.color_label' | t | default: 'Size' }}</label>
+        <div class="color-thumbs">
+          {% for value in color_option.values limit:3 %}
+            {% assign variant = product.variants | where: "option1", value | first %}
+            {% if variant != blank %}
+              {% assign color_hex = "#cccccc" %}
+              {% case value %}
+                {% when "White" %}{% assign color_hex = "#ffffff" %}
+                {% when "Pink" %}{% assign color_hex = "#f81aaeff" %}
+                {% when "Black" %}{% assign color_hex = "#000000" %}
+              {% endcase %}
+              <button type="button" 
+                class="color-thumb {% if forloop.first %}active{% endif %}" 
+                data-value="{{ value }}" 
+                data-variant-id="{{ variant.id }}"
+                data-image="{{ variant.featured_image | image_url: width: 600 }}"
+                data-price="{{ variant.price | money }}"
+                data-qty="{% if variant.inventory_management %}{{ variant.inventory_quantity }}{% else %}{% if variant.available %}{{ 'product.banner.in_stock' | t }}{% else %}{{ 'product.banner.not_available' | t }}{% endif %}{% endif %}"
+                data-available="{{ variant.available }}">
+                {% if variant.featured_image != blank %}
+                  <img src="{{ variant.featured_image | image_url: width: 100 }}" alt="{{ value }}">
+                {% else %}
+                  <span style="background-color: {{ color_hex }};">{{ value }}</span>
+                {% endif %}
+              </button>
+            {% endif %}
+          {% endfor %}
+        </div>
+        <input type="hidden" name="options[{{ color_option.name }}]" id="selected-color" value="{{ color_option.values.first }}">
+      {% endif %}
+      
+      {% comment %} Chose size {% endcomment %}
+       {% if size_option != blank %}
+        <label class="option-label">{{ 'product.banner.size_label' | t }}</label>
+        <div class="size-buttons">
+          {% for value in size_option.values %}
+            <button type="button" class="size-btn {% if forloop.first %}active{% endif %}" data-value="{{ value }}">
+              {{ 'product.banner.size_text' | t }} {{ value }}
+            </button>
+          {% endfor %}
+        </div>
+        <input type="hidden" name="options[{{ size_option.name }}]" id="selected-size" value="{{ size_option.values.first }}">
+      {% endif %}
+
+      {% comment %} Hidden select {% endcomment %}
+      <select name="id" id="variant-select" class="hidden">
+        {% for variant in product.variants %}
+          <option 
+            value="{{ variant.id }}" 
+            data-color="{{ variant.option1 }}" 
+            data-size="{{ variant.option2 }}" 
+            data-price="{{ variant.price | money }}" 
+            data-image="{% if variant.featured_image != blank %}{{ variant.featured_image | image_url: width: 600}}{% else %}{{ 'no-image.svg' | asset_url }}{% endif %}"
+            data-stock="{% if variant.inventory_management != blank %}{% if variant.inventory_quantity > 0 %}{{ 'product.banner.in_stock' | t }}{%else%}{{ 'product.banner.not_available' | t }}{% endif %}{% else %}{% if variant.available %}{{ 'product.banner.in_stock' | t }}{% else %}{{ 'product.banner.not_available' | t }}{% endif %}{% endif %}"
+            data-available="{{ variant.available }}"
+            {% if variant == product.selected_or_first_available_variant %}selected{% endif %}>
+            {{ variant.title }}
+          </option>
+        {% endfor %}
+      </select>
+
+      {% if product.description != blank %}
+        <div class=product-description>
+          {{ product.description }}
+        </div>
+      {% endif%}
+
+      <button type="submit" class="add-to-cart">
+        {{ 'product.banner.add_to_cart' | t }}
+      </button>
+
+    {% endform %}
+  </div>
+</div>
+
+<script>
+  console.log({{ product.description | json }})
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".banner-product");
+  if (!container) return;
+
+  const colorThumbs = container.querySelectorAll(".color-thumb");
+  const sizeBtns = container.querySelectorAll(".size-btn");
+  const colorInput = container.querySelector("#selected-color");
+  const sizeInput = container.querySelector("#selected-size");
+  const variantSelect = container.querySelector("#variant-select");
+  const mainImage = container.querySelector("#main-image");
+  const priceBox = container.querySelector("#product-price");
+  const stockBox = container.querySelector("#product-stock");
+
+  let selectedColor = colorInput.value;
+  let selectedSize = sizeInput.value;
+
+
+  {% comment %} Color chose {% endcomment %}
+  colorThumbs.forEach(thumb => {
+    thumb.addEventListener("click", () => {
+      colorThumbs.forEach(t => t.classList.remove("active"));
+      thumb.classList.add("active");
+      selectedColor = thumb.dataset.value;
+      colorInput.value = selectedColor;
+
+      updateVariant();
+    });
+  });
+
+ {% comment %} Color size {% endcomment %}
+  sizeBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      sizeBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedSize = btn.dataset.value;
+      sizeInput.value = selectedSize;
+
+      updateVariant();
+    });
+  });
+
+  {% comment %} Variants update {% endcomment %}
+  function updateVariant() {
+    if (!selectedColor || !selectedSize) return;
+    const options = variantSelect.querySelectorAll("option");
+    options.forEach(opt => {
+      if (opt.dataset.color === selectedColor && opt.dataset.size === selectedSize) {
+        variantSelect.value = opt.value;
+        mainImage.src = opt.dataset.image;
+        priceBox.textContent = opt.dataset.price; 
+        console.log(opt.dataset)
+        stockBox.textContent = opt.dataset.stock;
+      }
+    });
+  }
+});
+</script>
