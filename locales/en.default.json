@@ -1,0 +1,18 @@
+{
+  "header": {
+    "cart": "Cart"
+  },
+  "footer": {
+    "login": "Login",
+    "search": "Search",
+    "copyright": "2025 Nike, Inc. All rights reserved"
+  },
+  "a11y": {
+    "open_cart": "Open cart",
+    "footer_nav": "Footer navigation"
+  },
+  "teaser": {
+    "title": "Featured products",
+    "empty": "There are no products in this collection yet."
+  }
+}
