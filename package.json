@@ -1,0 +1,19 @@
+{
+  "name": "git-practice",
+  "version": "1.0.0",
+  "description": "This project is built on top of Shopify’s Dawn theme, the default reference theme for Online Store 2.0.\r It serves as a modern, flexible, and customizable Shopify theme with a focus on performance, accessibility, and maintainability.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "swiper": "^12.0.2",
+    "vite": "^7.1.9",
+    "type": "module"
+  }
+}
