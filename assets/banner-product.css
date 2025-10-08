@@ -1,4 +1,8 @@
 .banner-product {
+    width: 100%;
+    height: fit-content;
+}
+.banner-product .container {
     max-width: 1280px;
     margin: 16px auto;
     min-height: 80px;
@@ -11,7 +15,7 @@
     display: none;
 }
 
-.banner-product .container {
+.banner-product .intro-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
@@ -156,7 +160,7 @@
 }
 
 @media (max-width: 767px) {
-    .banner-product .container {
+    .banner-product .intro-container {
         grid-template-columns: 1fr;
         padding: 15px 27px;
     }
