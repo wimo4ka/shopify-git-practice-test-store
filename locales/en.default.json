@@ -5,7 +5,17 @@
   "footer": {
     "login": "Login",
     "search": "Search",
-    "copyright": "2025 Nike, Inc. All rights reserved"
+    "copyright": "2025 Nike, Inc. All rights reserved",
+    "useful_links": "Useful links",
+    "shop_all": "Shop All",
+    "terms": "Terms",
+    "privacy": "Privacy Policy",
+    "icon": "Icon",
+    "lorem": "Lorem ipsum",
+    "resources": "Resources",
+    "help": "Help",
+    "company": "Company",
+    "menu": "Menu"
   },
   "a11y": {
     "open_cart": "Open cart",
@@ -28,8 +38,7 @@
       "unit": "unit left",
       "no_product": "Stay tuned — surprises ahead!",
       "one_color": "ONE COLOR",
-      "one_size": "ONE SIZE",
-      "option": "option"
+      "one_size": "ONE SIZE"
     }
   }
 }
