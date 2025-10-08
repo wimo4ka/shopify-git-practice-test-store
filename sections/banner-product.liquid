@@ -1,0 +1,220 @@
+{{ 'banner-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'banner-product.js' | asset_url }}" defer></script>
+
+<section class="banner-product">
+  <div class="container">
+    {%- liquid
+      assign product = section.settings.product | default: product
+    -%}
+    {% if product != blank %}
+      <div class="intro-container">
+        {% comment %} Product image {% endcomment %}
+        <div class="product-image">
+          {% if product.has_only_default_variant %}
+            {% if product.featured_image != blank %}
+              <img
+                id="main-image"
+                src="{{ product.featured_image | image_url: width: 600  }}"
+                alt="{{ product.title }}"
+                width="584"
+                height="584"
+                loading="lazy"
+              >
+            {% else %}
+              <img
+                id="main-image"
+                src="{{ 'no-image.svg' | asset_url }}"
+                alt="No image available"
+                width="584"
+                height="584"
+                loading="lazy"
+              >
+            {% endif %}
+          {% else %}
+            {% if product.selected_or_first_available_variant.featured_image != blank %}
+              <img
+                id="main-image"
+                src="{{ product.featured_image | image_url: width: 600 }}"
+                alt="{{ product.title }}"
+                width="584"
+                height="584"
+                loading="lazy"
+              >
+            {% elsif product.featured_image != blank %}
+              <img
+                id="main-image"
+                src="{{ product.featured_image | image_url: width: 600 }}"
+                alt="{{ product.title }}"
+                width="584"
+                height="584"
+                loading="lazy"
+              >
+            {% else %}
+              <img
+                id="main-image"
+                src="{{ 'no-image.svg' | asset_url }}"
+                alt="No image available"
+                width="584"
+                height="584"
+                loading="lazy"
+              >
+            {% endif %}
+          {% endif %}
+          <div class="badge">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 13.0721L7.11574 14.6666L7.66671 11.2895L5.33337 8.89805L8.55789 8.40571L10 5.33325L11.4422 8.40571L14.6667 8.89805L12.3334 11.2895L12.8843 14.6666L10 13.0721Z" fill="#111111" stroke="#111111" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="badge-text">{{ 'product.banner.badge_text' | t }}</span>
+          </div>
+        </div>
+        {% comment %} Product form {% endcomment %}
+        <div>
+          {% if product.title != blank %}
+            <h1>{{ product.title }}</h1>
+          {% endif %}
+
+          {% capture product_price %}
+              {{ product.selected_or_first_available_variant.price | money }}
+              {% endcapture %}
+
+          <div class="price product-price" id="product-price">
+            {{ product_price }}
+          </div>
+
+          <div class="stock" id="product-stock">
+            {% if product.selected_or_first_available_variant.inventory_management != blank %}
+              {% if product.selected_or_first_available_variant.inventory_quantity > 1 %}
+                <span>
+                  {{ 'product.banner.in_stock' | t }}
+                  {{ product.selected_or_first_available_variant.inventory_quantity }}
+                  {{ 'product.banner.units' | t }}
+                </span>
+              {% elsif product.selected_or_first_available_variant.inventory_quantity > 0 %}
+                <span>
+                  {{ 'product.banner.in_stock' | t }}
+                  {{ product.selected_or_first_available_variant.inventory_quantity }}
+                  {{ 'product.banner.unit' | t }}
+                </span>
+              {% else %}
+                <span>
+                  {{ 'product.banner.not_available' | t }}
+                </span>
+              {% endif %}
+            {% else %}
+              {% if product.selected_or_first_available_variant.available -%}
+                {{- 'product.banner.in_stock' | t -}}
+              {%- else -%}
+                {{- 'product.banner.not_available' | t -}}
+              {%- endif %}
+            {% endif %}
+          </div>
+
+          {% assign color_option = '' %}
+          {% assign size_option = '' %}
+          {% if product.options_with_values != blank %}
+            {% form 'product', product, id: 'product-form' %}
+              {% for option in product.options_with_values %}
+                {% assign option_name = option.name | downcase %}
+                {% case option_name %}
+                  {% when 'color', 'colour', 'цвет' %}
+                    {% render 'product-option-selector',
+                      option: option,
+                      option_type: 'color',
+                      product: product,
+                      limit: 3
+                    %}
+                    {% assign color_option = option_name %}
+                  {% when 'size', 'shoe size', 'размер обуви' %}
+                    {% render 'product-option-selector', option: option, option_type: 'size', product: product %}
+                    {% assign size_option = option_name %}
+                {% endcase %}
+              {% endfor %}
+
+              {% comment %} {# ——— Hidden select ——— #} {% endcomment %}
+              <select name="id" id="variant-select" class="hidden">
+                {% for variant in product.variants %}
+                  <option
+                    value="{{ variant.id }}"
+                    data-color="{{ variant.option1 }}"
+                    data-size="{{ variant.option2 }}"
+                    data-image="{{ variant.featured_image | image_url: width: 600 }}"
+                    data-price="{{ variant.price | money }}"
+                    data-stock="
+                      {% if variant.inventory_management != blank %}
+                          {% if variant.inventory_quantity > 1 %}
+                              {{ 'product.banner.in_stock' | t }}
+                              {{ variant.inventory_quantity }}
+                              {{ 'product.banner.units' | t }}
+                          {% elsif variant.inventory_quantity > 0 %}
+                              {{ 'product.banner.in_stock' | t }}
+                              {{ variant.inventory_quantity }}
+                              {{ 'product.banner.unit' | t }}
+                          {% else %}
+                              {{ 'product.banner.not_available' | t }}
+                          {% endif %}
+                      {% else %}
+                          {% if variant.available -%}
+                          {{- 'product.banner.in_stock' | t -}}
+                          {%- else -%}
+                          {{- 'product.banner.not_available' | t -}}
+                          {%- endif %}
+                      {% endif %}
+                    "
+                    data-available="{{ variant.available }}"
+                    {% if variant == product.selected_or_first_available_variant %}
+                      selected
+                    {% endif %}
+                  >
+                    {{ variant.title }}
+                  </option>
+                {% endfor %}
+              </select>
+
+              {% if color_option == blank or size_option == blank  %}
+                <div class="no-option-wrapper">
+                  {% if color_option == blank %}
+                    <div class="no-option">{{ 'product.banner.one_color' | t }}</div>
+                  {% endif %}
+                  {% if size_option == blank %}
+                    <div class="no-option">{{ 'product.banner.one_size' | t }}</div>
+                  {% endif %}
+                </div>
+
+                {% if product.description != blank %}
+                  <div class="product-description">
+                    {{ product.description }}
+                  </div>
+                {% endif %}
+              {% endif %}
+
+              {% render 'add-to-cart-button', text: {{ 'product.banner.add_to_cart' | t  }}, btn_class: 'add-to-cart', type: 'submit' %}
+            {% endform %}
+          {% endif %}
+        </div>
+      </div>
+    {% else %}
+      <h2 class="banner-heading">
+        {{ 'product.banner.no_product' | t }}
+      </h2>
+    {% endif %}
+  </div> 
+</section>
+
+{% schema %}
+{
+  "name": "Product banner",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Select product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner product"
+    }
+  ]
+}
+{% endschema %}
+

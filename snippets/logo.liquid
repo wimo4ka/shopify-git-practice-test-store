@@ -1,0 +1,33 @@
+{%- comment -%}
+  snippets/logo.liquid
+  Usage:
+    {% render 'logo', logo: section.settings.logo %}
+    or
+    {% render 'logo' %}
+{%- endcomment -%}
+
+{{ 'logo.css' | asset_url | stylesheet_tag }}
+
+{%- assign logo_image = logo | default: section.settings.logo | default: 'logo-1.svg' -%}
+
+<a href="{{ routes.root_url }}" class="site-logo" aria-label="{{ shop.name }}">
+  {%- if logo_image contains 'shopify://shop_images' or logo_image contains 'cdn.shopify.com' -%}
+    <img
+      src="{{ logo_image | image_url: width: 300 }}"
+      alt="{{ shop.name }}"
+      width="100"
+      height="24"
+      loading="lazy"
+      class="site-logo__img"
+    >
+  {%- else -%}
+    <img
+      src="{{ logo_image | asset_url }}"
+      alt="{{ shop.name }}"
+      width="100"
+      height="24"
+      loading="lazy"
+      class="site-logo__img"
+    >
+  {%- endif -%}
+</a>
