@@ -108,140 +108,87 @@
           {% endif %}
         </div>
 
-        {% form 'product', product %}
-          {% comment %} Assign of product options {% endcomment %}
-          {% for option in product.options_with_values %}
-            {% assign option_name = option.name | downcase %}
-            {% case option_name %}
-              {% when 'color', 'colour', 'цвет' %}
-                {% assign color_option = option %}
-              {% when 'shoe size', 'размер обуви' %}
-                {% assign size_option = option %}
-            {% endcase %}
-          {% endfor %}
-
-          {% comment %} Chose color {% endcomment %}
-          {% if color_option != blank %}
-            <label class="option-label">{{ 'product.banner.color_label' | t | default: 'Size' }}</label>
-            <div class="color-thumbs">
-              {% for value in color_option.values limit: 3 %}
-                {% assign variant = product.variants | where: 'option1', value | first %}
-                {% if variant != blank %}
-                  {% assign color_hex = '#cccccc' %}
-                  {% case value %}
-                    {% when 'White' -%}
-                      {%- assign color_hex = '#ffffff' %}
-                    {% when 'Pink' -%}
-                      {%- assign color_hex = '#f81aaeff' %}
-                    {% when 'Black' -%}
-                      {%- assign color_hex = '#000000' %}
-                  {% endcase %}
-                  <button
-                    type="button"
-                    class="color-thumb {% if forloop.first %}active{% endif %}"
-                    data-value="{{ value }}"
-                    data-variant-id="{{ variant.id }}"
-                    data-image="{{ variant.featured_image | image_url: width: 600 }}"
-                    data-price="{{ variant.price | money }}"
-                    data-qty="{% if variant.inventory_management %}{{ variant.inventory_quantity }}{% else %}{% if variant.available %}{{ 'product.banner.in_stock' | t }}{% else %}{{ 'product.banner.not_available' | t }}{% endif %}{% endif %}"
-                    data-available="{{ variant.available }}"
-                  >
-                    {% if variant.featured_image != blank %}
-                      <img
-                        src="{{ variant.featured_image | image_url: width: 100 }}"
-                        alt="{{ value }}"
-                        width="80"
-                        height="80"
-                        loading="lazy"
-                      >
-                    {% else %}
-                      <span style="background-color: {{ color_hex }};">{{ value }}</span>
-                    {% endif %}
-                  </button>
-                {% endif %}
-              {% endfor %}
-            </div>
-            <input
-              type="hidden"
-              name="options[{{ color_option.name }}]"
-              id="selected-color"
-              value="{{ color_option.values.first }}"
-            >
-          {% else %}
-            <div class="option-label">{{ 'product.banner.one_color' | t }}</div>
-          {% endif %}
-
-          {% comment %} Chose size {% endcomment %}
-          {% if size_option != blank %}
-            <label class="option-label">{{ 'product.banner.size_label' | t }}</label>
-            <div class="size-buttons">
-              {% for value in size_option.values %}
-                <button type="button" class="size-btn {% if forloop.first %}active{% endif %}" data-value="{{ value }}">
-                  {{ 'product.banner.size_text' | t }}
-                  {{ value }}
-                </button>
-              {% endfor %}
-            </div>
-            <input
-              type="hidden"
-              name="options[{{ size_option.name }}]"
-              id="selected-size"
-              value="{{ size_option.values.first }}"
-            >
-          {% else %}
-            <div class="option-label">{{ 'product.banner.one_size' | t }}</div>
-          {% endif %}
-
-          {% comment %} Hidden select {% endcomment %}
-          <select name="id" id="variant-select" class="hidden">
-            {% for variant in product.variants %}
-              <option
-                value="{{ variant.id }}"
-                data-color="{{ variant.option1 }}"
-                data-size="{{ variant.option2 }}"
-                data-price="{{ variant.price | money }}"
-                data-image="{% if variant.featured_image != blank %}{{ variant.featured_image | image_url: width: 600}}{% else %}{{ 'no-image.svg' | asset_url }}{% endif %}"
-                data-stock="
-                  {% if variant.inventory_management != blank %}
-                      {% if variant.inventory_quantity > 1 %}
-                          {{ 'product.banner.in_stock' | t }}
-                          {{ variant.inventory_quantity }}
-                          {{ 'product.banner.units' | t }}
-                      {% elsif variant.inventory_quantity > 0 %}
-                          {{ 'product.banner.in_stock' | t }}
-                          {{ variant.inventory_quantity }}
-                          {{ 'product.banner.unit' | t }}
-                      {% else %}
-                          {{ 'product.banner.not_available' | t }}
-                      {% endif %}
-                  {% else %}
-                      {% if variant.available -%}
-                      {{- 'product.banner.in_stock' | t -}}
-                      {%- else -%}
-                      {{- 'product.banner.not_available' | t -}}
-                      {%- endif %}
-                  {% endif %}
-                "
-                data-available="{{ variant.available }}"
-                {% if variant == product.selected_or_first_available_variant %}
-                  selected
-                {% endif %}
-              >
-                {{ variant.title }}
-              </option>
+        {% assign color_option = '' %}
+        {% assign size_option = '' %}
+        {% if product.options_with_values != blank %}
+          {% form 'product', product, id: 'product-form' %}
+            {% for option in product.options_with_values %}
+              {% assign option_name = option.name | downcase %}
+              {% case option_name %}
+                {% when 'color', 'colour', 'цвет' %}
+                  {% render 'product-option-selector',
+                    option: option,
+                    option_type: 'color',
+                    product: product,
+                    limit: 3
+                  %}
+                  {% assign color_option = option_name %}
+                {% when 'size', 'shoe size', 'размер обуви' %}
+                  {% render 'product-option-selector', option: option, option_type: 'size', product: product %}
+                  {% assign size_option = option_name %}
+              {% endcase %}
             {% endfor %}
-          </select>
 
-          {% if product.description != blank %}
-            <div class="product-description">
-              {{ product.description }}
-            </div>
-          {% endif %}
+            {% comment %} {# ——— Hidden select ——— #} {% endcomment %}
+            <select name="id" id="variant-select" class="hidden">
+              {% for variant in product.variants %}
+                <option
+                  value="{{ variant.id }}"
+                  data-color="{{ variant.option1 }}"
+                  data-size="{{ variant.option2 }}"
+                  data-image="{{ variant.featured_image | image_url: width: 600 }}"
+                  data-price="{{ variant.price | money }}"
+                  data-stock="
+                    {% if variant.inventory_management != blank %}
+                        {% if variant.inventory_quantity > 1 %}
+                            {{ 'product.banner.in_stock' | t }}
+                            {{ variant.inventory_quantity }}
+                            {{ 'product.banner.units' | t }}
+                        {% elsif variant.inventory_quantity > 0 %}
+                            {{ 'product.banner.in_stock' | t }}
+                            {{ variant.inventory_quantity }}
+                            {{ 'product.banner.unit' | t }}
+                        {% else %}
+                            {{ 'product.banner.not_available' | t }}
+                        {% endif %}
+                    {% else %}
+                        {% if variant.available -%}
+                        {{- 'product.banner.in_stock' | t -}}
+                        {%- else -%}
+                        {{- 'product.banner.not_available' | t -}}
+                        {%- endif %}
+                    {% endif %}
+                  "
+                  data-available="{{ variant.available }}"
+                  {% if variant == product.selected_or_first_available_variant %}
+                    selected
+                  {% endif %}
+                >
+                  {{ variant.title }}
+                </option>
+              {% endfor %}
+            </select>
 
-          <button type="submit" class="add-to-cart">
-            {{ 'product.banner.add_to_cart' | t }}
-          </button>
-        {% endform %}
+            {% if color_option == blank or size_option == blank  %}
+              <div class="no-option-wrapper">
+                {% if color_option == blank %}
+                  <div class="no-option">{{ 'product.banner.one_color' | t }}</div>
+                {% endif %}
+                {% if size_option == blank %}
+                  <div class="no-option">{{ 'product.banner.one_size' | t }}</div>
+                {% endif %}
+              </div>
+
+              {% if product.description != blank %}
+                <div class="product-description">
+                  {{ product.description }}
+                </div>
+              {% endif %}
+            {% endif %}
+
+            {% render 'add-to-cart-button', text: {{ 'product.banner.add_to_cart' | t  }}, btn_class: 'add-to-cart', type: 'submit' %}
+          {% endform %}
+        {% endif %}
       </div>
     </div>
   {% else %}
@@ -250,10 +197,6 @@
     </h2>
   {% endif %}
 </section>
-
-<script>
-  console.log({{ product | json }})
-</script>
 
 {% schema %}
 {
@@ -272,3 +215,6 @@
   ]
 }
 {% endschema %}
+<script>
+  console.log({{ color_option | json }})
+</script>

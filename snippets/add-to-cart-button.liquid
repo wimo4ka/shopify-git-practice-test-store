@@ -1,0 +1,15 @@
+{%- comment -%}
+  Universal Add to Cart Button Snippet
+  Usage examples:
+  {% render 'add-to-cart-button' %}
+  {% render 'add-to-cart-button', text: 'Buy now' %}
+  {% render 'add-to-cart-button', text: 'Add to bag', btn_class: 'btn-primary', type: 'button' %}
+{%- endcomment -%}
+
+{%- assign btn_text = text | default: 'Add to cart' -%}
+{%- assign btn_class = btn_class | default: 'add-to-cart' -%}
+{%- assign btn_type = type | default: 'submit' -%}
+
+<button type="{{ btn_type }}" class="{{ btn_class }}">
+  {{ btn_text }}
+</button>

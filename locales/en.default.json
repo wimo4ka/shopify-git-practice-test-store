@@ -27,8 +27,9 @@
       "units": "units left",
       "unit": "unit left",
       "no_product": "Stay tuned — surprises ahead!",
-      "one_color": "One color product",
-      "one_size": "ONE SIZE"
+      "one_color": "ONE COLOR",
+      "one_size": "ONE SIZE",
+      "option": "option"
     }
   }
 }
