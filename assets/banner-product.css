@@ -1,0 +1,145 @@
+.banner-product {
+    max-width: 1280px;
+    margin: 16px auto;
+    min-height: 80px;
+}
+
+.banner-product .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.product-image {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.product-image img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    aspect-ratio: 1 / 1;
+    object-fit: cover
+}
+
+.product-image .badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #fff;
+    text-transform: capitalize;
+    border: none;
+    border-radius: 8px;
+}
+
+.option-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.color-thumbs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.color-thumb {
+    border: 2px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.color-thumb img {
+    display: block;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.color-thumb span {
+    display: block;
+    width: 80px;
+    height: 80px;
+}
+
+.hidden {
+    display: none;
+}
+
+.color-thumb.active {
+    border-color: #111111;
+}
+
+.size-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.size-btn {
+    padding: 16px;
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 8px;
+    border: 1px solid #EBEBEB;
+    background-color: #fff;
+    color: #111111;
+}
+
+.size-btn.active {
+    border-color: #000;
+}
+
+.price.product-price {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    margin: 16px 0;
+    color: #737373;
+}
+
+.stock {
+    font-size: 10px;
+    line-height: 14px;
+    margin-bottom: 16px;
+    color: #737373;
+}
+
+.product-description {
+    font-size: 14px;
+    line-height: 20px;
+    color: #737373;
+}
+
+.add-to-cart {
+    width: 100%;
+    padding: 16px 32px;
+    background-color: #111111;
+    color: #fff;
+    font-size: 16px;
+    line-height: 12px;
+    border-radius: 8px;
+}
+
+.banner-heading {
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    .banner-product .container {
+        grid-template-columns: 1fr;
+        padding: 15px 27px;
+    }
+}

@@ -9,9 +9,15 @@
  */
 {
   "sections": {
-    
+    "banner_product_rqGAih": {
+      "type": "banner-product",
+      "name": "Banner product",
+      "settings": {
+        "product": "nike-air-max-plus"
+      }
+    }
   },
   "order": [
-    
+    "banner_product_rqGAih"
   ]
 }
