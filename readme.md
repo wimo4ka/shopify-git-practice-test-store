@@ -34,6 +34,7 @@ This project is built from scratch theme for Online Store 2.0.
   In case of the absence of the above options, the output of service messages of the type (one size, one color) is added.
   In case if the product is not selected, then the service message product.banner.no_product has been added
 - Texts have been implemented with t:
+- Aria label tags added for navigation.
 - Image: image_url → image_tag with alt, add width/height, loading: 'lazy' in the lists.
 
 

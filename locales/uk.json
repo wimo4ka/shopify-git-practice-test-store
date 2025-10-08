@@ -1,6 +1,7 @@
 {
   "header": {
-    "cart": "Кошик"
+    "cart": "Кошик",
+    "main_navigation": "Main navigation"
   },
   "footer": {
     "login": "Логін",
