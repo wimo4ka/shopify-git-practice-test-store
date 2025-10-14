@@ -1,7 +1,8 @@
 {
   "header": {
     "cart": "Кошик",
-    "main_navigation": "Main navigation"
+    "main_navigation": "Головна навігація",
+    "site_header": "Верхня панель сайту"
   },
   "footer": {
     "login": "Логін",

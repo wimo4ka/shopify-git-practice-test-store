@@ -1,15 +1,15 @@
 {%- comment -%}
   snippets/nav-main.liquid
   Usage:
-    {% render 'nav-main' %}
+    {%- render 'nav-main' -%}
 {%- endcomment -%}
 
 {{ 'nav-main.css' | asset_url | stylesheet_tag }}
 
 <nav class="navbar" aria-label="{{ 'header.main_navigation' | t | default: 'Main navigation' }}">
   <ul>
-    {% for link in linklists['main-menu'].links -%}
+    {%- for link in linklists['main-menu'].links -%}
       <li>{{ link.title | link_to: link.url }}</li>
-    {%- endfor %}
+    {%- endfor -%}
   </ul>
 </nav>

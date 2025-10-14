@@ -1,7 +1,8 @@
 {
   "header": {
     "cart": "Cart",
-    "main_navigation": "Main navigation"
+    "main_navigation": "Main navigation",
+    "site_header": "Site header"
   },
   "footer": {
     "login": "Login",

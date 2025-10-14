@@ -113,26 +113,26 @@
           {% assign size_option = '' %}
           {% if product.options_with_values != blank %}
             {% form 'product', product, id: 'product-form' %}
-              {% for option in product.options_with_values %}
+              {%- for option in product.options_with_values -%}
                 {% assign option_name = option.name | downcase %}
                 {% case option_name %}
                   {% when 'color', 'colour', 'цвет' %}
-                    {% render 'product-option-selector',
+                    {%- render 'product-option-selector',
                       option: option,
                       option_type: 'color',
                       product: product,
                       limit: 3
-                    %}
+                    -%}
                     {% assign color_option = option_name %}
                   {% when 'size', 'shoe size', 'размер обуви' %}
-                    {% render 'product-option-selector', option: option, option_type: 'size', product: product %}
+                    {%- render 'product-option-selector', option: option, option_type: 'size', product: product -%}
                     {% assign size_option = option_name %}
                 {% endcase %}
-              {% endfor %}
+              {%- endfor -%}
 
               {% comment %} {# ——— Hidden select ——— #} {% endcomment %}
               <select name="id" id="variant-select" class="hidden">
-                {% for variant in product.variants %}
+                {%- for variant in product.variants -%}
                   <option
                     value="{{ variant.id }}"
                     data-color="{{ variant.option1 }}"
@@ -167,7 +167,7 @@
                   >
                     {{ variant.title }}
                   </option>
-                {% endfor %}
+                {%- endfor -%}
               </select>
 
               {% if color_option == blank or size_option == blank  %}
@@ -187,7 +187,7 @@
                 {% endif %}
               {% endif %}
 
-              {% render 'add-to-cart-button', text: {{ 'product.banner.add_to_cart' | t  }}, btn_class: 'add-to-cart', type: 'submit' %}
+              {%- render 'add-to-cart-button', text: {{ 'product.banner.add_to_cart' | t  }}, btn_class: 'add-to-cart', type: 'submit' -%}
             {% endform %}
           {% endif %}
         </div>
