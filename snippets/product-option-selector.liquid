@@ -2,7 +2,7 @@
   snippets/product-option-selector.liquid
   Universal product option selector
   Usage:
-    {% render 'product-option-selector', option: color_option, option_type: 'color', limit: 3 %}
+    {%- render 'product-option-selector', option: color_option, option_type: 'color', limit: 3 -%}
 {%- endcomment -%}
 
 {% if option != blank %}
@@ -24,7 +24,7 @@
       {% assign option_values = option_values | slice: 0, limit %}
     {% endif %}
 
-    {% for value in option_values %}
+    {%- for value in option_values -%}
       {% case option.position %}
         {% when 1 %}
           {% assign variant = product.variants | where: 'option1', value | first %}
@@ -87,7 +87,7 @@
           </button>
         {% endif %}
       {% endif %}
-    {% endfor %}
+    {%- endfor -%}
   </div>
 
   <input

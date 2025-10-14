@@ -1,9 +1,9 @@
 {{ 'header-menu.css' | asset_url | stylesheet_tag }}
 
-<header class="site-header" role="banner">
+<header class="site-header" role="banner" aria-label="{{ 'header.site_header' | t | default: 'Site header' }}">
   <div class="container">
-    {% render 'logo' %}
-    {% render 'nav-main' %}
+    {%- render 'logo' -%}
+    {%- render 'nav-main'-%}
     <a href="{{ routes.cart_url }}" aria-label="{{ 'a11y.open_cart' | t }}">
       <img
         src="{{ 'cart-icon.svg' | asset_url }}"

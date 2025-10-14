@@ -14,7 +14,8 @@
           <span class="footer-title">{{ 'footer.resources' | t | default: 'Resources'}}</span>
           <img
             src="{{ 'icon-arrow.svg' | asset_url }}"
-            alt="{{ 'footer.icon' | t }}"
+            alt=""
+            aria-hidden="true"
             class="icon"
             width="15"
             height="15"
@@ -23,11 +24,11 @@
           >
         </button>
         <ul id="footer-col-resources" class="footer-col-list">
-          {% for _ in (1..5) %}
+          {%- for _ in (1..5) -%}
             <li class="footer-item">
               <a href="#" class="footer-link">{{ 'footer.lorem' | t | default: 'Lorem ipsum' }}</a>
             </li>
-          {% endfor %}
+          {%- endfor -%}
         </ul>
       </div>
       <div class="footer-column">
@@ -40,7 +41,8 @@
           <span class="footer-title">{{ 'footer.help' | t | default: 'Help'}}</span>
           <img
             src="{{ 'icon-arrow.svg' | asset_url }}"
-            alt="{{ 'footer.icon' | t }}"
+            alt=""
+            aria-hidden="true"
             class="icon"
             width="15"
             height="15"
@@ -49,11 +51,11 @@
           >
         </button>
         <ul id="footer-col-help" class="footer-col-list">
-          {% for _ in (1..5) %}
+          {%- for _ in (1..5) -%}
             <li class="footer-item">
               <a href="#" class="footer-link">{{ 'footer.lorem' | t | default: 'Lorem ipsum' }}</a>
             </li>
-          {% endfor %}
+          {%- endfor -%}
         </ul>
       </div>
       <div class="footer-column">
@@ -63,10 +65,11 @@
           aria-expanded="true"
           aria-controls="footer-col-about-company"
         >
-           <span class="footer-title">{{ 'footer.help' | t | default: 'Company'}}</span>
+           <span class="footer-title">{{ 'footer.company' | t | default: 'Company'}}</span>
           <img
             src="{{ 'icon-arrow.svg' | asset_url }}"
-            alt="{{ 'footer.icon' | t }}"
+            alt=""
+            aria-hidden="true"
             class="icon"
             width="15"
             height="15"
@@ -74,12 +77,12 @@
             loading="lazy"
           >
         </button>
-        <ul id="footer-col-about-nike" class="footer-col-list">
-          {% for _ in (1..5) %}
+        <ul id="footer-col-about-company" class="footer-col-list">
+          {%- for _ in (1..5) -%}
             <li class="footer-item">
               <a href="#" class="footer-link">{{ 'footer.lorem' | t | default: 'Lorem ipsum' }}</a>
             </li>
-          {% endfor %}
+          {%- endfor -%}
         </ul>
       </div>
       <div class="footer-column">
@@ -93,7 +96,8 @@
           
           <img
             src="{{ 'icon-arrow.svg' | asset_url }}"
-            alt="{{ 'footer.icon' | t }}"
+            alt=""
+            aria-hidden="true"
             class="icon"
             width="15"
             height="15"
@@ -102,11 +106,11 @@
           >
         </button>
         <ul id="footer-col-menu" class="footer-col-list">
-          {% for _ in (1..5) %}
+          {%- for _ in (1..5) -%}
             <li class="footer-item">
               <a href="#" class="footer-link">{{ 'footer.lorem' | t | default: 'Lorem ipsum' }}</a>
             </li>
-          {% endfor %}
+          {%- endfor -%}
         </ul>
       </div>
     </div>
