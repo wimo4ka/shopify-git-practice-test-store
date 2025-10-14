@@ -15,9 +15,17 @@
       "settings": {
         "product": "nike-air-max-plus"
       }
+    },
+    "banner_product_EqtfQm": {
+      "type": "banner-product",
+      "name": "Banner product",
+      "settings": {
+        "product": "nike-air-max-plus"
+      }
     }
   },
   "order": [
-    "banner_product_rqGAih"
+    "banner_product_rqGAih",
+    "banner_product_EqtfQm"
   ]
 }
