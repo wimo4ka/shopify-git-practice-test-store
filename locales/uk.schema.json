@@ -1,0 +1,88 @@
+{
+  "settings_schema": {
+    "sections": {
+      "promo-banners": {
+        "name": "Промо-банери",
+        "settings": {
+          "header_1": {
+            "content": "Стилі тексту"
+          },
+          "header_2": {
+            "content": "Кольорова схема"
+          },
+          "heading": {
+            "default": "Заголовок",
+            "label": "Заголовок"
+          },
+          "subheading": {
+            "default": "Підзаголовок",
+            "label": "Підзаголовок"
+          },
+          "text_alignment": {
+            "options__1": {
+              "label": "Ліворуч"
+            },
+            "options__2": {
+              "label": "По центру"
+            },
+            "options__3": {
+              "label": "Праворуч"
+            },
+            "label": "Вирівнювання тексту"
+          },
+          "padding": {
+            "section_padding_heading": "Відступи секції",
+            "padding_top": "Верхній відступ",
+            "padding_bottom": "Нижній відступ"
+          },
+          "color_scheme": {
+            "options__1": {
+              "label": "Світла"
+            },
+            "options__2": {
+              "label": "Темна"
+            },
+            "options__3": {
+              "label": "Акцентна"
+            },
+            "label": "Кольорова схема"
+          }
+        },
+        "blocks": {
+          "banner": {
+            "name": "Банер",
+            "settings": {
+              "image": {
+                "label": "Зображення"
+              },
+              "title": {
+                "label": "Заголовок",
+                "default": "Заголовок банера"
+              },
+              "button_text": {
+                "label": "Текст кнопки",
+                "default": "Текст кнопки"
+              },
+              "button_link": {
+                "label": "Посилання кнопки"
+              },
+              "aspect_ratio": {
+                "label": "Співвідношення сторін",
+                "options__1": {
+                  "label": "16:9"
+                },
+                "options__2": {
+                  "label": "1:1"
+                },
+                "options__3": {
+                  "label": "3:2"
+                }
+              }
+            }
+          }
+        },
+        "presets": {}
+      }
+    }
+  }
+}

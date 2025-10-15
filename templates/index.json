@@ -15,9 +15,30 @@
       "settings": {
         "product": "nike-air-max-plus"
       }
+    },
+    "promo_banners": {
+      "type": "promo-banners",
+      "name": "Promo Banners",
+      "blocks": {
+        "banner_1": {
+          "type": "banner"
+        },
+        "banner_2": {
+          "type": "banner"
+        },
+        "banner_3": {
+          "type": "banner"
+        }
+      },
+      "block_order": [
+          "banner_1",
+          "banner_2",
+          "banner_3"
+      ],
     }
   },
   "order": [
-    "banner_product_EqtfQm"
+    "banner_product_EqtfQm",
+    "promo_banners"
   ]
 }
