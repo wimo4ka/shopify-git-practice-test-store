@@ -1,9 +1,15 @@
+.promo-banners {
+  box-sizing: border-box;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .promo-banners .container {
   max-width: 1280px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .promo-banners__heading,
