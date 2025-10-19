@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const section = document.querySelector("[data-section-id]");
   const sectionId = section.dataset.sectionId;
   const sortSelect = document.getElementById(`sort-by-${sectionId}`);
-  const grid = document.querySelector(".featured-products-grid");
+  const grid = document.querySelector(".scroll-content");
 
   const content = document.querySelector(".quick-view__content");
 
