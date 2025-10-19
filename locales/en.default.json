@@ -552,5 +552,18 @@
       "one_color": "ONE COLOR",
       "one_size": "ONE SIZE"
     }
+  },
+  "featured-products": {
+    "select": {
+      "sort_by": "Sort by:",
+      "best-selling": "Best Selling",
+      "price-low": "Price: Low to High",
+      "price-high": "Price: High to Low",
+      "title-ascending": "Alphabetically, A–Z"
+    },
+    "cart": {
+      "sold-out": "Sold Out",
+      "add-to-cart": "Add To Cart"
+    }
   }
 }

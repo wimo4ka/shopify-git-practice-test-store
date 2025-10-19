@@ -1,0 +1,20 @@
+{% comment %}
+  Renders cart quick-view popup
+
+  Usage:
+  {% render 'quick-view',
+    product: product
+  %}
+{% endcomment %}
+
+{{ 'quick-view.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'quick-view.js' | asset_url }}" defer></script>
+
+<quick-view class="quick-view">
+  <div class="quick-view__overlay"></div>
+  <div class="quick-view__inner">
+    <button data-close class="button">X</button>
+
+    <div class="quick-view__content"></div>
+  </div>
+</quick-view>

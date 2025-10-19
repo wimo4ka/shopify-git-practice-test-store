@@ -3479,5 +3479,30 @@
       },
       "presets": {}
     },
+    "featured-products": {
+      "name": "Featured Products",
+      "settings": {
+        "number_of_products": {
+          "label": "Number of products"
+        },
+        "show_price": {
+          "label": "Show price"
+        },
+        "show_rating": {
+          "label": "Show rating"
+        },
+        "show_add_to_cart": {
+          "label": "Show 'Add to cart' button"
+        },
+        "padding": {
+          "section_padding_heading": "Padding",
+          "padding_top": "Top",
+          "padding_bottom": "Bottom"
+        },
+      },
+      "presets": {
+        "name": "Featured Products"
+      }
+    }
   }
 }
