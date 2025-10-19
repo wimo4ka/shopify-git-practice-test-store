@@ -536,5 +536,21 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "product": {
+    "banner": {
+      "not_available": "Not avaliable",
+      "in_stock": "In stock",
+      "color_label": "Chose color",
+      "size_label": "Chose size",
+      "badge_text": "highly rated",
+      "add_to_cart": "Add to cart",
+      "size_text": "UK",
+      "units": "units left",
+      "unit": "unit left",
+      "no_product": "Stay tuned — surprises ahead!",
+      "one_color": "ONE COLOR",
+      "one_size": "ONE SIZE"
+    }
   }
 }
