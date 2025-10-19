@@ -22,28 +22,63 @@ This project is built from scratch theme for Online Store 2.0.
 
 ## 4. Features Implemented
 
--  created a working framework of the theme (OS 2.0) on Liquid, added structure, minimal required files (index.json, theme.liquid), added 2 localization files: en.default.json, uk.json
+Task Description
 
-- Created and stylized 2 sections header.liquid and footer.liquid
-   header.liquid: the header logo is used as a snippet, there was added a check for the logo resourse. Added a navigation snippet using the linklists object.
-   footer.liquid: links to the store pages are used via routes
+Create two custom sections with different types of settings and dynamic blocks.
 
-- Added and set up my training section banner-product.liquid.
-  The cart button add-to-cart-button.liquid is displayed in a separate snippet.
-  The selector for choosing the color or size of shoes product-option-selector.liquid is displayed in a separate snippet, and the output of the number of products in stock, if any, is also added.
-  In case of the absence of the above options, the output of service messages of the type (one size, one color) is added.
-  In case if the product is not selected, then the service message product.banner.no_product has been added
-- Texts have been implemented with t:
-- Aria label tags added for navigation.
-- Image: image_url → image_tag with alt, add width/height, loading: 'lazy' in the lists.
+Implemented Functionality:
 
+    Created a new git branch feature-hw_dynamic-content-sections.
+    A pull request was made to the dev branch (based on the Dawn theme) for easier review and testing.
 
-  ## Technologies:
-    •	Liquid, logic with tags.
-    •	Shopify Admin
-    •	Git
-    •	JS CSS
+    1. promo-banners.liquid
+        Implemented section schema with the following settings:
+            Heading (text)
+            Subheading (richtext)
+            Text alignment (select): left, center, right
+            Section padding (range): 0–100px
+            Color scheme (select): light, dark, accent
+        All textual setting values are defined in en.default.schema.json for localization support.
+        Added dynamic “banner” blocks with the following settings:
+            Image (image_picker)
+            Title (text)
+            Button text (text)
+            Button link (url)
+            Aspect ratio (select): 16:9, 1:1, 3:2
+        Implemented a responsive grid layout:
+            1 column on mobile,
+            2 columns on tablet,
+            3 columns on desktop.
 
-  ## Improvements:
-    Add burger menu.
-    Separate js and css for product-option-selector.liquid
+    2. featured-products.liquid
+        Implemented the following section settings:
+            Heading (text)
+            Collection selection (collection)
+            Number of products (range): 2–12
+            Show price (checkbox)
+            Show rating (checkbox)
+            Add to cart button (checkbox)
+        Added sorting filters (best-selling, price-low, price-high, title-ascending).
+        Sorting is currently implemented on the frontend; an attempt using the Section Rendering API was made but not yet successful.
+
+        On clicking “Add to cart,” a popup opens that renders part of the cart section.
+        The popup is implemented through the quick-view.liquid snippet.
+
+    Styles and JavaScript are stored in the assets folder.
+    Static text elements that may require translation are localized using the t filter and en.default.json.
+
+    Added a README file with a project description.
+
+## Technologies and Approaches
+
+Liquid
+Shopify Admin
+Git
+JavaScript & CSS
+
+## Improvements
+    I would like to see an example of how sorting in a section can be implemented using the Section Rendering API.
+
+    Potential improvement: make the popup snippet more universal so it can be reused beyond the cart.
+
+    Future enhancement: implement filters using the App Search and Discovery feature.
