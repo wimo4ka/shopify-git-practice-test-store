@@ -1,0 +1,122 @@
+.promo-banners .container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.promo-banners__heading,
+.promo-banners__subheading {
+  margin-bottom: 16px;
+}
+
+.promo-banners__header-wrapper.text-alignment-right {
+  text-align: right;
+}
+
+.promo-banners__header-wrapper.text-alignment-center {
+  text-align: center;
+}
+
+.promo-banners__header-wrapper.text-alignment-left {
+  text-align: left;
+}
+
+.promo-banners.color-light {
+  background: #fff;
+  color: #111111;
+  border-color: #111111;
+}
+
+.promo-banners.color-light .section-button {
+  background: #111111;
+  color: #fff;
+}
+
+.promo-banners.color-dark {
+  background: #111111;
+  color: #fff;
+  border-color: #fff;
+}
+
+.promo-banners.color-dark svg {
+  filter: invert();
+}
+
+.promo-banners.color-dark .section-button {
+  background: #fff;
+  color: #111111;
+}
+
+.promo-banners.color-accent {
+  background: #FFF5E1;
+  color: #1C1C1C;
+  border-color: #1C1C1C;
+}
+
+.promo-banners.color-accent .section-button {
+  background: #1C1C1C;
+  color: #FFF5E1;
+}
+
+.promo-banners__item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-width: 1px;
+  border-style: solid;
+  align-items: center;
+}
+
+.promo-banners__item svg,
+.promo-banners__item img {
+  object-fit: cover;
+  display: block;
+  width: 100%;
+  min-width: 300px;
+  border-radius: 12px;
+}
+
+.promo-banners__grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 750px) {
+  .promo-banners__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .promo-banners__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.section-button[aria-disabled] {
+  opacity: 0.5;
+}
+.section-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  padding: 8px 20px;
+  width: fit-content;
+  cursor: pointer;
+  font: inherit;
+  font-size: 16px;
+  text-decoration: none;
+  transition: box-shadow .1s ease;
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 88px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+}
