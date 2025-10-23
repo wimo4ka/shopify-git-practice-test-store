@@ -3503,6 +3503,40 @@
       "presets": {
         "name": "Featured Products"
       }
+    },
+    "collection-designers": {
+      "name": "Our Designers",
+      "settings": {
+        "padding": {
+          "section_padding_heading": "Padding",
+          "padding_top": "Top",
+          "padding_bottom": "Bottom"
+        },
+        "show_designer_name": {
+          "label": "Show designer name"
+        },
+        "show_designer_img": {
+          "label": "Show designer photo"
+        },
+        "show_designer_position": {
+          "label": "Show designer position"
+        },
+        "show_designer_bio": {
+          "label": "Show designer bio"
+        },
+        "show_tags": {
+          "label": "Show tags"
+        },
+        "show_links": {
+          "label": "Show portfolio links"
+        },
+        "show_birthday": {
+          "label": "Show birthday"
+        },
+        "show_verification": {
+          "label": "Show verification"
+        },
+      }
     }
   }
 }

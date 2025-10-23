@@ -556,5 +556,16 @@
       "sold-out": "Sold Out",
       "add-to-cart": "Add To Cart"
     }
+  },
+  "collection-designers": {
+    "designer-card": {
+      "bio": "Bio",
+      "tags": "Tags",
+      "links": "Portfolio links:",
+      "link": "Portfolio link:",
+      "birthday": "Date of birth",
+      "verified": "Verified",
+      "unverified": "Unverified"
+    }
   }
 }

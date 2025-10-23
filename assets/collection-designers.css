@@ -1,0 +1,136 @@
+.collection-designers {
+  box-sizing: border-box;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.collection-designers .container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  gap: 16px;
+}
+
+h2, h3, p, ul {
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-weight: 600;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.designer-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 750px) {
+  .designer-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  .designer-card-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.designer-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 16px;
+  justify-content: space-between;
+}
+
+.designer-card img,
+.designer-card svg {
+  width: 200px;
+  height: 200px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+  align-self: center ;
+}
+
+.name {
+  text-align: center;
+  margin: 8px auto 0 auto;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.position {
+  text-align: center;
+}
+
+.article h3 {
+  margin-bottom: 8px;
+}
+
+.bio {
+  line-height: 1.2;
+  font-size: 12px;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tags li {
+  background-color: rgb(178, 232, 248);
+  border-radius: 16px;
+  padding: 4px 8px;
+  font-size: 14px;
+  color: #111111;
+}
+
+.links li a {
+  color: #111111;
+  font-size: 14px;
+}
+
+.verification {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border-radius: 16px;
+  padding: 4px 8px;
+  width: fit-content;
+}
+
+.verification.checked {
+  background-color: rgba(22, 160, 56, 0.1);
+}
+.verification.unchecked {
+  background-color: rgba(160, 22, 40, 0.1);
+}
+
+.verification svg {
+  height: 28px;
+}
+
+.verification p {
+  font-weight: 600;
+}
+
+.verification .green {
+  color: #16a038;
+}
+.verification .red {
+  color: #a01628;
+}
