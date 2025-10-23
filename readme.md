@@ -22,63 +22,50 @@ This project is built from scratch theme for Online Store 2.0.
 
 ## 4. Features Implemented
 
-Task Description
+# 🧩 Working with Metafields and Metaobjects
 
-Create two custom sections with different types of settings and dynamic blocks.
+## 📝 Task Description
+Implementation of functionality for working with **Shopify metafields** and **metaobjects**.
 
-Implemented Functionality:
+---
 
-    Created a new git branch feature-hw_dynamic-content-sections.
-    A pull request was made to the dev branch (based on the Dawn theme) for easier review and testing.
+## 🚀 Implemented Functionality
 
-    1. promo-banners.liquid
-        Implemented section schema with the following settings:
-            Heading (text)
-            Subheading (richtext)
-            Text alignment (select): left, center, right
-            Section padding (range): 0–100px
-            Color scheme (select): light, dark, accent
-        All textual setting values are defined in en.default.schema.json for localization support.
-        Added dynamic “banner” blocks with the following settings:
-            Image (image_picker)
-            Title (text)
-            Button text (text)
-            Button link (url)
-            Aspect ratio (select): 16:9, 1:1, 3:2
-        Implemented a responsive grid layout:
-            1 column on mobile,
-            2 columns on tablet,
-            3 columns on desktop.
+- Created a new branch: **`feat-hw-working-with-metafields-and-metaobjects`**  
+- In **Shopify Admin**, a **Metaobject: `Designer`** was created with the following fields:
 
-    2. featured-products.liquid
-        Implemented the following section settings:
-            Heading (text)
-            Collection selection (collection)
-            Number of products (range): 2–12
-            Show price (checkbox)
-            Show rating (checkbox)
-            Add to cart button (checkbox)
-        Added sorting filters (best-selling, price-low, price-high, title-ascending).
-        Sorting is currently implemented on the frontend; an attempt using the Section Rendering API was made but not yet successful.
+| Field name | Key | Type | Notes |
+|-------------|------|------|-------|
+| Name | `designer.name` | Single line text |  |
+| Avatar | `designer.avatar` | File → Image |  |
+| Bio | `designer.bio` | Multiline text |  |
+| Tags | `designer.tags` | List of single line strings | Limited to preset choices |
+| Portfolio links | `designer.portfolio_links` | List of links |  |
+| Date of Birth | `designer.date_of_birth` | Date |  |
+| Verified designer | `designer.verified_designer` | True/False |  |
 
-        On clicking “Add to cart,” a popup opens that renders part of the cart section.
-        The popup is implemented through the quick-view.liquid snippet.
+---
 
-    Styles and JavaScript are stored in the assets folder.
-    Static text elements that may require translation are localized using the t filter and en.default.json.
+- Added **4 designer entries**, one of which:
+  - has no image,
+  - includes a single portfolio link,
+  - is marked as **unverified**.
 
-    Added a README file with a project description.
+- Created section **`collection-designers`**, which displays cards for all designers.
 
-## Technologies and Approaches
+```liquid
+{% assign designers = metaobjects.designer.values %}
+Section settings allow toggling the visibility of specific metaobject fields.
+
+- Added value validation checks for all designer card elements.
+- Styles moved to assets.
+- Translatable text is implemented using t in en.default.json.
+- Section schema translations handled via t in en.schema.default.json.
+
+
+## 5. Technologies and Approaches
 
 Liquid
 Shopify Admin
 Git
-JavaScript & CSS
-
-## Improvements
-    I would like to see an example of how sorting in a section can be implemented using the Section Rendering API.
-
-    Potential improvement: make the popup snippet more universal so it can be reused beyond the cart.
-
-    Future enhancement: implement filters using the App Search and Discovery feature.
+CSS
