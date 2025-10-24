@@ -54,7 +54,7 @@ Implementation of functionality for working with **Shopify metafields** and **me
 - Created section **`collection-designers`**, which displays cards for all designers.
 
 ```liquid
-{% assign designers = metaobjects.designer.values %}
+'{% assign designers = collection.metafields.custom.designers.value %}'
 Section settings allow toggling the visibility of specific metaobject fields.
 
 - Added value validation checks for all designer card elements.

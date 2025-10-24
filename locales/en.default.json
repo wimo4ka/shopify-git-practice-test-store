@@ -566,6 +566,8 @@
       "birthday": "Date of birth",
       "verified": "Verified",
       "unverified": "Unverified"
-    }
+    },
+    "no-collection": "We are working for you, wait something new is comming...",
+    "no-designers": "We are looking for your creativity"
   }
 }
