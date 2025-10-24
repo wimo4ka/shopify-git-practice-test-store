@@ -15,88 +15,96 @@
   }
 {%- endstyle -%}
 
-{% assign designers = metaobjects.designer.values %}
+{% assign target_collection = collections[section.settings.collection] | default: collection %}
+{% assign designers = target_collection.metafields.custom.designers.value %}
+
 <section class="collection-designers section-{{ section.id }} section-{{ section.id }}-padding">
   <div class="container">
-    {%- if designers != blank -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="collection-designers__heading">{{ section.settings.heading | escape | default: "Designers" }}</h2>
-      {%- endif -%}
-      <div class="designer-card-grid">
-        {%- for designer in designers -%}
-          <div class="designer-card">
-            {%- if section.settings.show_designer_img and designer.avatar != blank -%}
-              {{ designer.avatar | image_url: width: 400 | image_tag: alt: designer.name }}
-            {%- else -%}
-              {{ 'hero-apparel-1' | placeholder_svg_tag: 'Placeholder image' }}
-            {%- endif -%}
-            {%- if section.settings.show_designer_name -%}
-              <h2 class="name">{{ designer.name | default: 'Designer name' }}</h2>
-            {%- endif -%}
-            {%- if section.settings.show_designer_position and designer.position != blank -%}
-              <p class="position">{{ designer.position }}</p>
-            {%- endif -%}
-            {%- if section.settings.show_designer_bio and designer.bio != blank -%}
-              <article class="article article-bio">
-                <h3>{{- 'collection-designers.designer-card.bio' | t | default: "Bio" -}}</h3>
-                <p class="bio">{{ designer.bio }}</p>
-              </article>
-            {%- endif -%}
-            {%- if section.settings.show_tags and designer.tags.value != blank -%}
-              <article class="article article-tags">
-                <h3>{{- 'collection-designers.designer-card.tags' | t | default: "Tags" -}}</h3>
-                <ul class="tags">
-                  {%- for tag in designer.tags.value -%}
-                    <li>#{{ tag }}</li>
-                  {%- endfor -%}
-                </ul>
-              </article>
-            {%- endif -%}
-            {%- if section.settings.show_links and designer.portfolio_links.value != blank -%}
-              <article class="article article-tags">
-                {% if designer.portfolio_links.value.size > 1 %}
-                  <h3>{{- 'collection-designers.designer-card.links' | t | default: "Portfolio links:" -}}</h3>
-                {%- else -%}
-                  <h3>{{- 'collection-designers.designer-card.link' | t | default: "Portfolio link:" -}}</h3>
-                {% endif %}
-                <ul class="links">
-                  {%- for link in designer.portfolio_links.value -%}
-                    <li>
-                      <a href="{{ link.url }}">{{ link.url }}</a>
-                    </li>
-                  {%- endfor -%}
-                </ul>
-              </article>
-            {%- endif -%}
-            {%- if section.settings.show_birthday and designer.date_of_birth != blank -%}
-              <article class="article article-birthday">
-                <h3>{{- 'collection-designers.designer-card.birthday' | t | default: "Date of birth" -}}</h3>
-                <p class="birthday">{{ designer.date_of_birth | date: '%B %d, %Y' }}</p>
-              </article>
-            {%- endif -%}
-            {%- if section.settings.show_verification -%}
-              {% if designer.verified_designer -%}
-                <div class="verification checked">
-                  <span class="svg-wrapper">
-                    {{- 'designer-checked.svg' | inline_asset_content -}}
-                  </span>
-                  <p class="green">{{- 'collection-designers.designer-card.verified' | t | default: "Verified" -}}</p>
-                </div>
+    {%- if target_collection == blank -%}
+      <h2 class="no-collection">{{- 'collection-designers.no-collection' | t | default: 'We are working for you, wait something new is comming...' -}}</h2>
+    {%- else -%}
+      {%- if designers != blank -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="collection-designers__heading">{{ section.settings.heading | escape | default: 'Designers' }}</h2>
+        {%- endif -%}
+        <div class="designer-card-grid">
+          {%- for designer in designers -%}
+            <div class="designer-card">
+              {%- if section.settings.show_designer_img and designer.avatar != blank -%}
+                {{ designer.avatar | image_url: width: 400 | image_tag: alt: designer.name }}
               {%- else -%}
-                <div class="verification unchecked">
-                  <span class="svg-wrapper">
-                    {{- 'designer-unchecked.svg' | inline_asset_content -}}
-                  </span>
-                  <p class="red">{{- 'collection-designers.designer-card.unverified' | t | default: "Unverified" -}}</p>
-                </div>
-              {%- endif %}
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
-      </div>
-    {% else %}
-      <div class="no-designers">We are looking for your creativity</div>
-    {%- endif -%}
+                {{ 'hero-apparel-1' | placeholder_svg_tag: 'Placeholder image' }}
+              {%- endif -%}
+              {%- if section.settings.show_designer_name -%}
+                <h2 class="name">{{ designer.name | default: 'Designer name' }}</h2>
+              {%- endif -%}
+              {%- if section.settings.show_designer_position and designer.position != blank -%}
+                <p class="position">{{ designer.position }}</p>
+              {%- endif -%}
+              {%- if section.settings.show_designer_bio and designer.bio != blank -%}
+                <article class="article article-bio">
+                  <h3>{{- 'collection-designers.designer-card.bio' | t | default: 'Bio' -}}</h3>
+                  <p class="bio">{{ designer.bio }}</p>
+                </article>
+              {%- endif -%}
+              {%- if section.settings.show_tags and designer.tags.value != blank -%}
+                <article class="article article-tags">
+                  <h3>{{- 'collection-designers.designer-card.tags' | t | default: 'Tags' -}}</h3>
+                  <ul class="tags">
+                    {%- for tag in designer.tags.value -%}
+                      <li>#{{ tag }}</li>
+                    {%- endfor -%}
+                  </ul>
+                </article>
+              {%- endif -%}
+              {%- if section.settings.show_links and designer.portfolio_links.value != blank -%}
+                <article class="article article-tags">
+                  {% if designer.portfolio_links.value.size > 1 %}
+                    <h3>{{- 'collection-designers.designer-card.links' | t | default: 'Portfolio links:' -}}</h3>
+                  {%- else -%}
+                    <h3>{{- 'collection-designers.designer-card.link' | t | default: 'Portfolio link:' -}}</h3>
+                  {% endif %}
+                  <ul class="links">
+                    {%- for link in designer.portfolio_links.value -%}
+                      <li>
+                        <a href="{{ link.url }}">{{ link.url }}</a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </article>
+              {%- endif -%}
+              {%- if section.settings.show_birthday and designer.date_of_birth != blank -%}
+                <article class="article article-birthday">
+                  <h3>{{- 'collection-designers.designer-card.birthday' | t | default: 'Date of birth' -}}</h3>
+                  <p class="birthday">{{ designer.date_of_birth | date: '%B %d, %Y' }}</p>
+                </article>
+              {%- endif -%}
+              {%- if section.settings.show_verification -%}
+                {% if designer.verified_designer -%}
+                  <div class="verification checked">
+                    <span class="svg-wrapper">
+                      {{- 'designer-checked.svg' | inline_asset_content -}}
+                    </span>
+                    <p class="green">{{- 'collection-designers.designer-card.verified' | t | default: 'Verified' -}}</p>
+                  </div>
+                {%- else -%}
+                  <div class="verification unchecked">
+                    <span class="svg-wrapper">
+                      {{- 'designer-unchecked.svg' | inline_asset_content -}}
+                    </span>
+                    <p class="red">
+                      {{- 'collection-designers.designer-card.unverified' | t | default: 'Unverified' -}}
+                    </p>
+                  </div>
+                {%- endif %}
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {% else %}
+        <h2 class="no-designers">{{- 'collection-designers.no-designers' | t | default: 'We are looking for your creativity' -}}</h2>
+      {%- endif -%}
+    {% endif %}
   </div>
 </section>
 
@@ -109,6 +117,11 @@
       "id": "heading",
       "label": "Heading",
       "default": "t:sections.collection-designers.name"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
     },
     {
       "type": "checkbox",
@@ -186,7 +199,3 @@
   ]
 }
 {% endschema %}
-
-<script>
-  console.log('designers', {{ designers.length }});
-</script>
