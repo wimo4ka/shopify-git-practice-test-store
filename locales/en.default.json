@@ -569,5 +569,18 @@
     },
     "no-collection": "We are working for you, wait something new is comming...",
     "no-designers": "We are looking for your creativity"
+  },
+  "custom-contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "submit": "Send",
+      "success": "Thank you, your message is send! We'll get back to you as soon as possible.",
+      "error": "Error, Please try again",
+      "honeypot": "Website (do not fill)",
+      "error_summary": "Please check the form"
+    }
   }
 }

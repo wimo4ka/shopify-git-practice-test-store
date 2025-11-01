@@ -3537,6 +3537,16 @@
           "label": "Show verification"
         },
       }
+    },
+    "custom-contact-form": {
+      "name": "Contact us",
+      "settings": {
+        "padding": {
+          "section_padding_heading": "Padding",
+          "padding_top": "Top",
+          "padding_bottom": "Bottom"
+        },
+      }
     }
   }
 }
