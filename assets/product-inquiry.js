@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isAvailable = !selectedOption.disabled;
         submitButton.disabled = !isAvailable;
         submitButton.textContent = isAvailable
-          ? '{{ "product-form.inquiry.submit" | t }}'
-          : '{{ "product-form.inquiry.sold_out" | t }}';
+          ? 'Add to cart'
+          : 'Sold Out';
         if (stockBox && selectedOption.dataset.stock) {
           stockBox.textContent = selectedOption.dataset.stock;
         }
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', function () {
       if (!submitButton.disabled) {
         submitButton.disabled = true;
-        submitButton.textContent = '{{ "product-form.inquiry.success" | t }}';
+        submitButton.textContent = 'Product added to cart successfully!';
         form.setAttribute('aria-busy', 'true');
       }
     });
