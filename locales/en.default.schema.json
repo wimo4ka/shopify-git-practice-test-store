@@ -3539,7 +3539,7 @@
       }
     },
     "custom-contact-form": {
-      "name": "Product inquiry",
+      "name": "Contact us",
       "settings": {
         "padding": {
           "section_padding_heading": "Padding",
@@ -3549,7 +3549,7 @@
       }
     },
     "product-inquiry": {
-      "name": "Contact us",
+      "name": "Product inquiry",
       "settings": {
         "padding": {
           "section_padding_heading": "Padding",
