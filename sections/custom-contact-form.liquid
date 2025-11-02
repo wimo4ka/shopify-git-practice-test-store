@@ -1,0 +1,167 @@
+{{ 'contact-form-section.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-contact-form.js' | asset_url }}" defer></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section
+  class="contact-form-section section-{{ section.id }} section-{{ section.id }}-padding"
+  aria-labelledby="contact-form-title"
+>
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 id="contact-form-title">{{ section.settings.heading | escape | default: 'Contact us' }}</h2>
+    {%- endif -%}
+
+    {% form 'contact', id: 'custom_contact_form', class: 'custom-contact-form' %}
+      {%- if form.posted_successfully? -%}
+        <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>
+          {{- 'icon-success.svg' | inline_asset_content -}}
+          {{ 'custom-contact.form.success' | t }}
+        </h2>
+      {%- elsif form.errors -%}
+        <div class="form__message">
+          <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>
+            {{- 'icon-error.svg' | inline_asset_content -}}
+            {{ 'custom-contact.form.error' | t }}
+          </h2>
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      <div class="honeypot" aria-hidden="true">
+        <label for="custom_contact_form-honeypot">{{ 'custom-contact.form.honeypot' | t }}</label>
+        <input type="text" name="contact[honeypot]" id="custom_contact_form-honeypot" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="form-field">
+        <label for="custom_contact_form-name">{{ 'custom-contact.form.name' | t }}</label>
+        <input
+          type="text"
+          name="contact[name]"
+          id="custom_contact_form-name"
+          placeholder="{{ 'custom-contact.form.name' | t }}"
+          value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+        >
+      </div>
+
+      <div class="form-field">
+        <label for="custom_contact_form-email">{{ 'custom-contact.form.email' | t }}</label>
+        <input
+          autocomplete="email"
+          autocorrect="off"
+          autocapitalize="off"
+          type="email"
+          name="contact[email]"
+          id="custom_contact_form-email"
+          placeholder="{{ 'custom-contact.form.email' | t }}"
+          required
+          value="{% if form.email %}{{form.email}}{% elsif customer %}{{ customer.email }}{% endif %}"
+          pattern="^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$"
+          aria-required="true"
+          {% if form.errors contains 'email' %}
+            aria-invalid="true"
+            aria-describedby="custom_contact_form-email-error"
+          {% endif %}
+        >
+        {%- if form.errors contains 'email' -%}
+          <small class="contact__field-error" id="custom_contact_form-email-error">
+            <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+            <span class="form__message">
+              <span class="svg-wrapper">
+                {{- 'icon-error.svg' | inline_asset_content -}}
+              </span>
+              {{- form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email -}}
+            </span>
+          </small>
+        {%- endif -%}
+      </div>
+
+      <div class="form-field">
+        <label for="custom_contact_form-phone">{{ 'custom-contact.form.phone' | t }}</label>
+        <input
+          type="tel"
+          name="contact[phone]"
+          id="custom_contact_form-phone"
+          placeholder="{{ 'custom-contact.form.phone' | t }}"
+          autocomplete="tel"
+          value="{% if form.phone %}{{form.phone}}{% elsif customer %}{{ customer.phone }}{% endif %}"
+          pattern="^\+?(?:[0-9] ?){6,14}[0-9]$"
+        >
+      </div>
+
+      <div class="form-field">
+        <label htmlFor="message">{{ 'custom-contact.form.message' | t }}</label>
+        <textarea
+          name="contact[body]"
+          rows="10"
+          id="custom_contact_form-message"
+          required
+          aria-required="true"
+          placeholder="{{ 'custom-contact.form.message' | t }}"
+          {% if form.errors contains 'message' %}
+            aria-invalid="true"
+            aria-describedby="custom_contact_form-message-error"
+          {% endif %}
+        >{{- form.body -}}</textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="custom_contact_form-submit" id="custom_contact_form-submit">
+          {{ 'custom-contact.form.submit' | t }}
+        </button>
+      </div>
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom contact form",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "t:sections.custom-contact-form.name"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.custom-contact-form.settings.padding.padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.custom-contact-form.settings.padding.padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom contact form"
+    }
+  ]
+}
+{% endschema %}

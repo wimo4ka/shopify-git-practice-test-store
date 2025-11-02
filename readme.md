@@ -22,45 +22,55 @@ This project is built from scratch theme for Online Store 2.0.
 
 ## 4. Features Implemented
 
-# 🧩 Working with Metafields and Metaobjects
-
-## 📝 Task Description
-Implementation of functionality for working with **Shopify metafields** and **metaobjects**.
+## 🛠️ Task Description  
+**Working with forms in Shopify**
 
 ---
 
-## 🚀 Implemented Functionality
+## 🚀 Implemented Functionality  
+---
 
-- Created a new branch: **`feat-hw-working-with-metafields-and-metaobjects`**  
-- In **Shopify Admin**, a **Metaobject: `Designer`** was created with the following fields:
+### 📨 Contact Form  
+Implemented in the `custom-contact-form.liquid` section.  
+The section was added to the **homepage**.
 
-| Field name | Key | Type | Notes |
-|-------------|------|------|-------|
-| Name | `designer.name` | Single line text |  |
-| Avatar | `designer.avatar` | File → Image |  |
-| Bio | `designer.bio` | Multiline text |  |
-| Tags | `designer.tags` | List of single line strings | Limited to preset choices |
-| Portfolio links | `designer.portfolio_links` | List of links |  |
-| Date of Birth | `designer.date_of_birth` | Date |  |
-| Verified designer | `designer.verified_designer` | True/False |  |
+**Features:**
+- Displays submission status separately (**success / error messages**)
+- Added fields:
+  - **Name** — text input  
+  - **Email** — required, autocomplete enabled  
+  - **Phone** — text input  
+  - **Message** — required, textarea  
+- **HTML validation** added for all fields  
+- **Honeypot anti-spam** implemented  
+  - If a bot is detected, a console warning appears:  
+    `Spam bot detected — form not submitted`
+- Works correctly with **reCAPTCHA** enabled (no conflicts)
 
 ---
 
-- Added **4 designer entries**, one of which:
-  - has no image,
-  - includes a single portfolio link,
-  - is marked as **unverified**.
+### 🛍️ Product Inquiry Form  
+Implemented in the `product-inquiry.liquid` section.  
+The section was added to the **product page**.
 
-- Created section **`collection-designers`**, which displays cards for all designers.
+**Features:**
+- Displays submission status separately (**success / error messages**)
+- Added fields:
+  - **Variant** — select dropdown (visible only if the product has variants, e.g. `/products/nike-air-max-plus`)
+  - **Quantity** — number input (`min: 1`, `max: inventory quantity`, or `max: 100` if not specified; required, autocomplete enabled)
+  - **Reason for inquiry** — text input  
+  - **Preferred contact method** — radio button group  
+- When a product variant is **unavailable**:
+  - **Submit button** is disabled  
+  - A **user message** is displayed  
+- `properties[...]` are stored in the **line item**
 
-```liquid
-'{% assign designers = collection.metafields.custom.designers.value %}'
-Section settings allow toggling the visibility of specific metaobject fields.
+---
 
-- Added value validation checks for all designer card elements.
-- Styles moved to assets.
-- Translatable text is implemented using t in en.default.json.
-- Section schema translations handled via t in en.schema.default.json.
+### 🧩 Additional Notes
+- **Styles** and **JavaScript** are placed in the `/assets` directory  
+- All translatable text elements use the `t` filter and are defined in `en.default.json`  
+- **Section schema translations** are handled via `t` in `en.schema.default.json`  
 
 
 ## 5. Technologies and Approaches
@@ -69,3 +79,4 @@ Liquid
 Shopify Admin
 Git
 CSS
+JS

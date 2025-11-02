@@ -274,7 +274,6 @@
       "announcement": "Announcement",
       "announcement_bar": "Announcement bar"
     },
-
     "header": {
       "announcement": "Announcement",
       "menu": "Menu",
@@ -569,5 +568,41 @@
     },
     "no-collection": "We are working for you, wait something new is comming...",
     "no-designers": "We are looking for your creativity"
+  },
+  "custom-contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "submit": "Send",
+      "success": "Thank you, your message is send! We'll get back to you as soon as possible.",
+      "error": "Error, Please try again",
+      "honeypot": "Website (do not fill)",
+      "error_summary": "Please check the form"
+    }
+  },
+  "product-form": {
+    "inquiry": {
+      "variant": "Variant",
+      "reason": "Reason for inquiry",
+      "reason_placeholder": "e.g., Wholesale request, Customization, etc.",
+      "preferred_contact": "Preferred contact method",
+      "preferred_contact_placeholder": "e.g., Email, Phone, etc.",
+      "quantity": "Quantity",
+      "sold_out": "Sold Out",
+      "submit": "Add to cart",
+      "success": "Product added to cart successfully!",
+      "error": "Something went wrong. Please check form",
+      "contact_email": "Email",
+      "contact_phone": "Phone",
+      "contact_none": "No contact needed",
+      "unavailable_message": "This variant is currently unavailable.",
+      "not_available": "Not avaliable",
+      "in_stock": "In stock",
+      "units": "units left",
+      "unit": "unit left",
+      "no_product": "Warning! this section is used for product pages"
+    }
   }
 }

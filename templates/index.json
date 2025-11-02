@@ -38,11 +38,17 @@
       "settings": {
         "collection": "new-collection",
       }
+    },
+    "custom-contact-form": {
+      "type": "custom-contact-form",
+      "settings": {
+      }
     }
   },
   "order": [
     "promo_banners",
     "product-grid",
-    "company-designers"
+    "company-designers",
+    "custom-contact-form"
   ]
 }
