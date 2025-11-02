@@ -3539,6 +3539,16 @@
       }
     },
     "custom-contact-form": {
+      "name": "Product inquiry",
+      "settings": {
+        "padding": {
+          "section_padding_heading": "Padding",
+          "padding_top": "Top",
+          "padding_bottom": "Bottom"
+        },
+      }
+    },
+    "product-inquiry": {
       "name": "Contact us",
       "settings": {
         "padding": {

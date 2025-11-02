@@ -82,6 +82,9 @@
         "padding_bottom": 12
       }
     },
+    "product-inquiry": {
+      "type": "product-inquiry"
+    },
     "related-products": {
       "type": "related-products",
       "settings": {
@@ -103,6 +106,7 @@
   },
   "order": [
     "main",
+    "product-inquiry",
     "related-products"
   ]
 }
