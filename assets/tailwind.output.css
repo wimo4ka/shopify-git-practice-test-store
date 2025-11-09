@@ -234,6 +234,9 @@
   .\!box-border {
     box-sizing: border-box !important;
   }
+  .\!hidden {
+    display: none !important;
+  }
   .block {
     display: block;
   }
@@ -554,9 +557,19 @@
       flex-direction: row;
     }
   }
+  .dark\:\!block {
+    &:where(.dark, .dark *) {
+      display: block !important;
+    }
+  }
   .dark\:block {
     &:where(.dark, .dark *) {
       display: block;
+    }
+  }
+  .dark\:hidden {
+    &:where(.dark, .dark *) {
+      display: none;
     }
   }
   .dark\:border-gray-300 {
@@ -639,9 +652,6 @@
     line-height: var(--tw-leading, var(--text-4xl--line-height));
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
-  }
-  .tw-hidden {
-    display: none;
   }
 }
 @layer components {

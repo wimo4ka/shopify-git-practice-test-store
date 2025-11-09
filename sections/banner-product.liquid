@@ -31,10 +31,10 @@
       <span
         class="toggle-circle w-6 h-6 bg-white dark:bg-black rounded-full shadow-md flex items-center justify-center transform transition-all duration-500"
       >
-        <span class="w-4 h-4 text-yellow-500 dark:tw-hidden">
+        <span class="w-4 h-4 text-yellow-500 dark:hidden">
           {{ 'icon-light.svg' | inline_asset_content  }}
         </span>
-        <span class="w-4 h-4 tw-hidden dark:block text-yellow-300">
+        <span class="w-4 h-4 hidden dark:!block text-yellow-300">
           {{ 'icon-dark.svg' | inline_asset_content }}
         </span>
       </span>
@@ -67,7 +67,7 @@
           <div class="product-gallery-section w-full lg:w-1/2" data-media="{{ product.media | json | escape }}">
             <div class="container mx-auto flex flex-col-reverse gap-2 w-full lg:flex-row">
               {% comment %} Thumbs {% endcomment %}
-              <div class="swiper mySwiper w-full h-fit lg:h-[454px] lg:w-1/6">
+              <div class="swiper mySwiper w-full h-fit lg:h-[454px] lg:tw-h-454 lg:w-1/6">
                 <div class="swiper-wrapper h-full">
                   {%- unless product.images == blank -%}
                     {%- assign images_only = product.media | where: 'media_type', 'image' -%}
@@ -104,8 +104,8 @@
                     </div>
                   {% endfor %}
                 </div>
-                <div class="swiper-button-next hidden"></div>
-                <div class="swiper-button-prev hidden"></div>
+                <div class="swiper-button-next !hidden tw-h-454"></div>
+                <div class="swiper-button-prev !hidden"></div>
               </div>
             </div>
           </div>
