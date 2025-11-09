@@ -1,17 +1,35 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
+    "banner-product": {
+      "type": "banner-product",
+      "name": "Banner Product",
+      "settings": {
+        "product": "nike-air-max-plus"
+      }
+    },
     "promo_banners": {
       "type": "promo-banners",
-      "name": "Promo Banners",
       "blocks": {
         "banner_1": {
-          "type": "banner"
+          "type": "banner",
+          "settings": {}
         },
         "banner_2": {
-          "type": "banner"
+          "type": "banner",
+          "settings": {}
         },
         "banner_3": {
-          "type": "banner"
+          "type": "banner",
+          "settings": {}
         }
       },
       "block_order": [
@@ -19,6 +37,8 @@
         "banner_2",
         "banner_3"
       ],
+      "name": "Promo Banners",
+      "settings": {}
     },
     "product-grid": {
       "type": "featured-products",
@@ -36,16 +56,16 @@
     "company-designers": {
       "type": "collection-designers",
       "settings": {
-        "collection": "new-collection",
+        "collection": "new-collection"
       }
     },
     "custom-contact-form": {
       "type": "custom-contact-form",
-      "settings": {
-      }
+      "settings": {}
     }
   },
   "order": [
+    "banner-product",
     "promo_banners",
     "product-grid",
     "company-designers",

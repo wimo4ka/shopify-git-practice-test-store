@@ -6,7 +6,7 @@
 {%- endcomment -%}
 
 {% if option != blank %}
-  <label class="option-label">
+  <label class="option-label mb-4 text-brand-gray text-black font-medium dark:text-white" for="selected-{{ option_type }}">
     {% case option_type %}
       {% when 'color' %}
         {{ 'product.banner.color_label' | t | default: 'Color' }}
@@ -17,7 +17,13 @@
     {% endcase %}
   </label>
 
-  <div class="{{ option_type }}-options">
+  <div
+    {% if option_type == 'color' %}
+      class="{{ option_type }}-options grid grid-cols-3 gap-3"
+    {% else %}
+      class="{{ option_type }}-options grid grid-cols-3 gap-3"
+    {% endif %}
+  >
     {% assign option_values = option.values %}
 
     {% if limit %}
@@ -54,7 +60,7 @@
 
           <button
             type="button"
-            class="color-thumb {% if forloop.first %}active{% endif %}"
+            class="color-thumb {% if forloop.first %}active border-gray-900 dark:border-gray-300{% endif %} aspect-square w-28 h-28 flex items-center justify-center border border-gray-300 rounded-md overflow-hidden"
             data-value="{{ value }}"
             data-variant-id="{{ variant.id }}"
             data-image="{{ image | image_url: width: 600 }}"
@@ -63,13 +69,11 @@
             data-available="{{ available }}"
           >
             {% if image != blank %}
-              <img
-                src="{{ image | image_url: width: 100 }}"
-                alt="{{ value }}"
-                width="88"
-                height="88"
-                loading="lazy"
-              >
+              {{
+                image
+                | image_url: width: 100
+                | image_tag: alt: value, loading: 'lazy', class: 'w-full object-cover aspect-square'
+              }}
             {% else %}
               <span style="background-color: {{ color_hex }};"></span>
             {% endif %}
@@ -77,7 +81,7 @@
         {% else %}
           <button
             type="button"
-            class="size-btn {% if forloop.first %}active{% endif %}"
+            class="size-btn {% if forloop.first %}active bg-black text-white dark:bg-white dark:!text-black{% endif %} w-1/4 py-3 px-4 border border-gray-300 rounded-md text-center font-medium text-brand-gray hover:border-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black text-brand-gray text-black font-medium text-2xl dark:border-white dark:text-white dark:hover:border-gray-300 dark:focus:ring-white"
             data-value="{{ value }}"
             data-stock="{{ stock }}"
             data-available="{{ available }}"

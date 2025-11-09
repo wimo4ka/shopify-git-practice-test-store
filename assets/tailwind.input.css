@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    @apply font-sans;
+  }
+  h1 {
+    @apply text-4xl font-bold;
+  }
+  .tw-hidden {
+    @apply hidden;
+  }
+}
+
+@layer components {
+  .swiper-slide {
+    @apply bg-gray-100 !flex items-center justify-center text-center rounded-lg shadow p-0 w-fit h-fit aspect-square overflow-hidden;
+  }
+  .swiper {
+    @apply overflow-hidden;
+  }
+}

@@ -1,103 +1,144 @@
-{{ 'banner-product.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'banner-product.js' | asset_url }}" defer></script>
+{% comment %} {{ 'banner-product.css' | asset_url | stylesheet_tag }} {% endcomment %}
 
-<section class="banner-product">
-  <div class="container">
+{{ 'tailwind.output.css' | asset_url | stylesheet_tag }}
+{{ 'section-swiper.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'section-swiper.js' | asset_url }}" defer></script>
+<script src="{{ 'banner-product.js' | asset_url }}" defer></script>
+<script src="{{ 'theme-toggle.js' | asset_url }}" defer></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="banner-product section-{{ section.id }} section-{{ section.id }}-padding dark:bg-black relative">
+  <div class="page-width max-w-7xl p-1 mx-auto flex justify-end mt-4">
+    <button
+      id="theme-toggle"
+      class="w-14 h-8 bg-gray-300 dark:bg-gray-700 rounded-full p-1 flex items-center transition-all duration-500"
+      aria-label="Toggle dark mode"
+    >
+      <span
+        class="toggle-circle w-6 h-6 bg-white dark:bg-black rounded-full shadow-md flex items-center justify-center transform transition-all duration-500"
+      >
+        <span class="w-4 h-4 text-yellow-500 dark:tw-hidden">
+          {{ 'icon-light.svg' | inline_asset_content  }}
+        </span>
+        <span class="w-4 h-4 tw-hidden dark:block text-yellow-300">
+          {{ 'icon-dark.svg' | inline_asset_content }}
+        </span>
+      </span>
+    </button>
+  </div>
+  <div class="page-width max-w-7xl p-1 mx-auto">
     {%- liquid
       assign product = section.settings.product | default: product
     -%}
     {% if product != blank %}
-      <div class="intro-container">
-        {% comment %} Product image {% endcomment %}
-        <div class="product-image">
-          {% if product.has_only_default_variant %}
-            {% if product.featured_image != blank %}
-              <img
-                id="main-image"
-                src="{{ product.featured_image | image_url: width: 600  }}"
-                alt="{{ product.title }}"
-                width="584"
-                height="584"
-                loading="lazy"
-              >
-            {% else %}
-              <img
-                id="main-image"
-                src="{{ 'no-image.svg' | asset_url }}"
-                alt="No image available"
-                width="584"
-                height="584"
-                loading="lazy"
-              >
-            {% endif %}
+      <div class="gallary-intro-container !box-border flex gap-8 flex-col lg:flex-row">
+        {%- if product.has_only_default_variant -%}
+          {% if product.featured_image != blank %}
+            {{
+              product.featured_image
+              | image_url: width: 600
+              | image_tag:
+                alt: product.title,
+                loading: 'lazy',
+                class: 'main-image w-full lg:w-1/2 object-cover aspect-square'
+            }}
           {% else %}
-            {% if product.selected_or_first_available_variant.featured_image != blank %}
-              <img
-                id="main-image"
-                src="{{ product.featured_image | image_url: width: 600 }}"
-                alt="{{ product.title }}"
-                width="584"
-                height="584"
-                loading="lazy"
-              >
-            {% elsif product.featured_image != blank %}
-              <img
-                id="main-image"
-                src="{{ product.featured_image | image_url: width: 600 }}"
-                alt="{{ product.title }}"
-                width="584"
-                height="584"
-                loading="lazy"
-              >
-            {% else %}
-              <img
-                id="main-image"
-                src="{{ 'no-image.svg' | asset_url }}"
-                alt="No image available"
-                width="584"
-                height="584"
-                loading="lazy"
-              >
-            {% endif %}
-          {% endif %}
-          <div class="badge">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 13.0721L7.11574 14.6666L7.66671 11.2895L5.33337 8.89805L8.55789 8.40571L10 5.33325L11.4422 8.40571L14.6667 8.89805L12.3334 11.2895L12.8843 14.6666L10 13.0721Z" fill="#111111" stroke="#111111" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="badge-text">{{ 'product.banner.badge_text' | t }}</span>
+            {{
+              'no-image.svg'
+              | asset_url
+              | image_tag: alt: product.title, class: 'main-image w-full lg:w-1/2 object-cover aspect-square'
+            }}
+          {%- endif -%}
+        {%- else -%}
+          <div class="product-gallery-section w-full lg:w-1/2" data-media="{{ product.media | json | escape }}">
+            <div class="container mx-auto flex flex-col-reverse gap-2 w-full lg:flex-row">
+              {% comment %} Thumbs {% endcomment %}
+              <div class="swiper mySwiper w-full h-fit lg:h-[454px] lg:w-1/6">
+                <div class="swiper-wrapper h-full">
+                  {%- unless product.images == blank -%}
+                    {%- assign images_only = product.media | where: 'media_type', 'image' -%}
+                    {%- assign filtered_images = images_only | where: 'alt', 'white' -%}
+                    {% for image in filtered_images %}
+                      <div class="swiper-slide w-fit h-fit">
+                        <img
+                          src="{{ image.src | image_url: width: 88 }}"
+                          width="88"
+                          height="88"
+                          alt="{{ image.alt | escape }}"
+                          class="object-contain aspect-square"
+                        >
+                      </div>
+                    {% endfor %}
+                  {%- endunless -%}
+                </div>
+              </div>
+
+             {% comment %} Main Swiper {% endcomment %}
+              <div class="swiper mySwiper2 w-full h-fit lg:w-5/6 lg:h-[454px]">
+                <div class="swiper-wrapper h-full">
+                  {%- assign images_only = product.media | where: 'media_type', 'image' -%}
+                  {%- assign filtered_images = images_only | where: 'alt', 'white' -%}
+                  {% for image in filtered_images %}
+                    <div class="swiper-slide">
+                      <img
+                        src="{{ image.src | image_url: width: 600 }}"
+                        width="584"
+                        height="584"
+                        alt="{{ image.alt | escape }}"
+                        class="object-contain aspect-square"
+                      >
+                    </div>
+                  {% endfor %}
+                </div>
+                <div class="swiper-button-next hidden"></div>
+                <div class="swiper-button-prev hidden"></div>
+              </div>
+            </div>
           </div>
-        </div>
-        {% comment %} Product form {% endcomment %}
-        <div>
+        {%- endif -%}
+        <div class="product-info w-full md:w-1/2 mx-auto lg:mx-0">
           {% if product.title != blank %}
-            <h1>{{ product.title }}</h1>
+            <h1 class="mb-4 dark:!text-white">{{- product.title -}}</h1>
           {% endif %}
 
           {% capture product_price %}
-              {{ product.selected_or_first_available_variant.price | money }}
-              {% endcapture %}
-
-          <div class="price product-price" id="product-price">
-            {{ product_price }}
+            {{ product.selected_or_first_available_variant.price | money }}
+          {% endcapture %}
+          <div class="product-price mb-2 text-inherit text-2xl dark:text-white" id="product-price">
+            {{- product_price -}}
           </div>
 
-          <div class="stock" id="product-stock">
+          <div class="stock mb-4 text-gray-500 text-base dark:text-white" id="product-stock">
             {% if product.selected_or_first_available_variant.inventory_management != blank %}
               {% if product.selected_or_first_available_variant.inventory_quantity > 1 %}
                 <span>
-                  {{ 'product.banner.in_stock' | t }}
-                  {{ product.selected_or_first_available_variant.inventory_quantity }}
-                  {{ 'product.banner.units' | t }}
+                  {{- 'product.banner.in_stock' | t }}
+                  {{- product.selected_or_first_available_variant.inventory_quantity }}
+                  {{ 'product.banner.units' | t -}}
                 </span>
               {% elsif product.selected_or_first_available_variant.inventory_quantity > 0 %}
                 <span>
-                  {{ 'product.banner.in_stock' | t }}
-                  {{ product.selected_or_first_available_variant.inventory_quantity }}
-                  {{ 'product.banner.unit' | t }}
+                  {{- 'product.banner.in_stock' | t -}}
+                  {{- product.selected_or_first_available_variant.inventory_quantity -}}
+                  {{- 'product.banner.unit' | t -}}
                 </span>
               {% else %}
                 <span>
-                  {{ 'product.banner.not_available' | t }}
+                  {{- 'product.banner.not_available' | t -}}
                 </span>
               {% endif %}
             {% else %}
@@ -170,7 +211,7 @@
                 {%- endfor -%}
               </select>
 
-              {% if color_option == blank or size_option == blank  %}
+              {% if color_option == blank or size_option == blank %}
                 <div class="no-option-wrapper">
                   {% if color_option == blank %}
                     <div class="no-option">{{ 'product.banner.one_color' | t }}</div>
@@ -187,27 +228,75 @@
                 {% endif %}
               {% endif %}
 
-              {%- render 'add-to-cart-button', text: {{ 'product.banner.add_to_cart' | t  }}, btn_class: 'add-to-cart', type: 'submit' -%}
+              <div class="custom-form-actions mb-4 w-full flex justify-center">
+                <button
+                  type="submit"
+                  class="
+                    btn w-full max-w-3xs px-8 py-3 text-center font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 rounded-md focus:ring-offset-2 focus:ring-black
+                    disabled:opacity-25 disabled:cursor-not-allowed dark:bg-white dark:text-black dark:hover:bg-gray-200 dark:focus:ring-white
+                  "
+                  {% unless product.selected_or_first_available_variant.available %}
+                    disabled
+                  {% endunless %}
+                >
+                  {% if product.selected_or_first_available_variant.available %}
+                    {{ 'product-form.inquiry.submit' | t }}
+                  {% else %}
+                    {{ 'product-form.inquiry.sold_out' | t }}
+                  {% endif %}
+                </button>
+
+                {% unless product.selected_or_first_available_variant.available %}
+                  <div role="status" aria-live="polite" class="availability-message">
+                    {{ 'product-form.inquiry.unavailable_message' | t }}
+                  </div>
+                {% endunless %}
+              </div>
+              {% if product.description != blank %}
+                <div class="product-description text-brand-gray text-black font-medium text-base dark:text-white">
+                  {{ product.description }}
+                </div>
+              {% endif %}
             {% endform %}
           {% endif %}
         </div>
       </div>
     {% else %}
-      <h2 class="banner-heading">
+      <h2 class="banner-heading text-brand-gray text-black font-medium dark:text-white text-2xl text-center">
         {{ 'product.banner.no_product' | t }}
       </h2>
     {% endif %}
-  </div> 
+  </div>
 </section>
 
 {% schema %}
 {
-  "name": "Product banner",
+  "name": "t:sections.promo-banner-product.name",
   "settings": [
     {
       "type": "product",
       "id": "product",
-      "label": "Select product"
+      "label": "t:sections.promo-banner-product.settings.product.label"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "t:sections.promo-banner-product.settings.padding.padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "t:sections.promo-banner-product.settings.padding.padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 36
     }
   ],
   "presets": [
