@@ -3557,6 +3557,19 @@
           "padding_bottom": "Bottom"
         },
       }
+    },
+    "promo-banner-product": {
+      "name": "Banner Product",
+      "settings": {
+        "padding": {
+          "section_padding_heading": "Padding",
+          "padding_top": "Top",
+          "padding_bottom": "Bottom"
+        },
+        "product": {
+          "label": "Select product"
+        },
+      }
     }
   }
 }
