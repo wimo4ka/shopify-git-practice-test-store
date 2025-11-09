@@ -23,60 +23,43 @@ This project is built from scratch theme for Online Store 2.0.
 ## 4. Features Implemented
 
 ## 🛠️ Task Description  
-**Working with forms in Shopify**
+# Tailwind CSS Integration in Dawn Theme
 
----
+## Task
+Integrate Tailwind CSS into the Dawn theme - https://tailwindcss.com/
 
-## 🚀 Implemented Functionality  
----
+## Branch
+`feat-tailwind` created in the test store.
 
-### 📨 Contact Form  
-Implemented in the `custom-contact-form.liquid` section.  
-The section was added to the **homepage**.
+## Implemented Features
 
-**Features:**
-- Displays submission status separately (**success / error messages**)
-- Added fields:
-  - **Name** — text input  
-  - **Email** — required, autocomplete enabled  
-  - **Phone** — text input  
-  - **Message** — required, textarea  
-- **HTML validation** added for all fields  
-- **Honeypot anti-spam** implemented  
-  - If a bot is detected, a console warning appears:  
-    `Spam bot detected — form not submitted`
-- Works correctly with **reCAPTCHA** enabled (no conflicts)
+- **banner-product section refactor**
+  - All styles rewritten using Tailwind CSS.
+  - `tailwind.config.js` added. Custom styles and `tw-` prefix did not apply correctly. Guidance on correct setup is welcome.
+  
+- **Swiper integration via Vite**
+  - Image gallery works with Swiper.
+  - Tailwind styles attempted for Swiper elements.
+  - **Open question:** How to access Swiper methods (`removeAllSlides()`, `appendSlide()`) in other JS files when initialized via Vite.
 
----
+- **Theme toggle**
+  - Added a light/dark mode switch.
+  - Initially tried as a snippet, but caused constant local syncing. Added directly in the section instead.
 
-### 🛍️ Product Inquiry Form  
-Implemented in the `product-inquiry.liquid` section.  
-The section was added to the **product page**.
+## How to Build Tailwind + Vite
 
-**Features:**
-- Displays submission status separately (**success / error messages**)
-- Added fields:
-  - **Variant** — select dropdown (visible only if the product has variants, e.g. `/products/nike-air-max-plus`)
-  - **Quantity** — number input (`min: 1`, `max: inventory quantity`, or `max: 100` if not specified; required, autocomplete enabled)
-  - **Reason for inquiry** — text input  
-  - **Preferred contact method** — radio button group  
-- When a product variant is **unavailable**:
-  - **Submit button** is disabled  
-  - A **user message** is displayed  
-- `properties[...]` are stored in the **line item**
+1. Install dependencies:
 
----
+```bash
+npm install
+```
 
-### 🧩 Additional Notes
-- **Styles** and **JavaScript** are placed in the `/assets` directory  
-- All translatable text elements use the `t` filter and are defined in `en.default.json`  
-- **Section schema translations** are handled via `t` in `en.schema.default.json`  
+2. Start development with Vite + Tailwind:
+```bash
+npm run dev
+```
+This runs:
 
-
-## 5. Technologies and Approaches
-
-Liquid
-Shopify Admin
-Git
-CSS
-JS
+- Shopify theme development (shopify theme dev)
+- Vite build watcher (vite build --watch)
+- Tailwind CLI watcher to generate CSS:
