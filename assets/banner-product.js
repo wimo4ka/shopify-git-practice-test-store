@@ -21,12 +21,47 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedColor = colorInput ? colorInput.value : null;
   let selectedSize = sizeInput ? sizeInput.value : null;
 
+  const section = document.querySelector(".product-gallery-section");
+  if (!section) return;
+
+  const thumbsEl = section.querySelector(".mySwiper");
+  const mainEl = section.querySelector(".mySwiper2");
+  if (!thumbsEl || !mainEl) return;
+
+
+const thumbsSwiper = new Swiper(thumbsEl, {
+    direction: "horizontal",
+    spaceBetween: 8,
+    slidesPerView: 5,
+    watchSlidesProgress: true,
+    slideToClickedSlide: true,
+    freeMode: true,
+    breakpoints: {
+      1024: {
+        direction: "vertical",
+        slidesPerView: 5,
+        spaceBetween: 8,
+      },
+    },
+  });
+
+  const mainSwiper = new Swiper(mainEl, {
+    spaceBetween: 0,
+    navigation: {
+      nextEl: mainEl.querySelector(".swiper-button-next"),
+      prevEl: mainEl.querySelector(".swiper-button-prev"),
+    },
+    thumbs: {
+      swiper: thumbsSwiper,
+    },
+  });
+
 
   //   color choice
   colorThumbs.forEach((thumb) => {
     thumb.addEventListener("click", () => {
-      colorThumbs.forEach((t) => t.classList.remove("active", "border-gray-900", "dark:border-gray-300"));
-      thumb.classList.add("active", "border-gray-900", "dark:border-gray-300");
+      colorThumbs.forEach((t) => t.classList.remove("active", "tw:border-gray-900", "tw:dark:border-gray-300"));
+      thumb.classList.add("active", "tw:border-gray-900", "tw:dark:border-gray-300");
 
       selectedColor = thumb.dataset.value;
       if (colorInput) colorInput.value = selectedColor;
@@ -38,8 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
   //   Size choice
   sizeBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      sizeBtns.forEach((b) => b.classList.remove("active", "bg-black", "text-white", "dark:bg-white", "dark:!text-black"));
-      btn.classList.add("active", "bg-black", "text-white", "dark:bg-white", "dark:!text-black");
+      sizeBtns.forEach((b) => b.classList.remove("active", "tw:bg-black", "tw:text-white", "tw:dark:bg-white", "tw:dark:!text-black"));
+      btn.classList.add("active", "tw:bg-black", "tw:text-white", "tw:dark:bg-white", "tw:dark:!text-black");
 
       selectedSize = btn.dataset.value;
       if (sizeInput) sizeInput.value = selectedSize;
@@ -63,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const options = Array.from(variantSelect.options);
     let matchedVariant = null;
 
-    // Шукаємо відповідний варіант за кольором та розміром
     for (const opt of options) {
       const matchColor = !selectedColor || opt.dataset.color === selectedColor;
       const matchSize = !selectedSize || opt.dataset.size === selectedSize;
@@ -121,60 +155,23 @@ document.addEventListener("DOMContentLoaded", () => {
         media.alt?.toLowerCase().includes(color.toLowerCase())
     );
 
-    const mainWrapper = section.querySelector(".mySwiper2 .swiper-wrapper");
-    const thumbsWrapper = section.querySelector(".mySwiper .swiper-wrapper");
-
-    if (!mainWrapper || !thumbsWrapper) return;
-
-    mainWrapper.innerHTML = "";
-    thumbsWrapper.innerHTML = "";
+    mainSwiper.removeAllSlides();
+    thumbsSwiper.removeAllSlides();
 
     filteredImages.forEach((img) => {
-      thumbsWrapper.insertAdjacentHTML(
-        "beforeend",
-        `<div class="swiper-slide w-fit h-fit">
-         <img src="${img.src}" alt="${img.alt}" width="88" height="88"
-              class="object-contain aspect-square" loading="lazy">
-       </div>`
-      );
-
-      mainWrapper.insertAdjacentHTML(
-        "beforeend",
-        `<div class="swiper-slide">
-         <img src="${img.src}" alt="${img.alt}" width="584" height="584"
-              class="object-contain aspect-square" loading="lazy">
-       </div>`
-      );
-    });
-
-    const mainSwiperEl = section.querySelector(".mySwiper2").swiper;
-    const thumbsSwiperEl = section.querySelector(".mySwiper").swiper;
- 
-    /* Я дуже хотіла звернутися саме до компонента Swiper, 
-    але в мене не вийшло, можете будь ласка проглянути, і підказати як краще зробити
-    if (!mainSwiperEl || !thumbsSwiperEl) return;
-
-    mainSwiperEl.removeAllSlides();
-    thumbsSwiperEl.removeAllSlides();
-
-    filteredImages.forEach((img) => {
-      mainSwiperEl.appendSlide(
+      mainSwiper.appendSlide(
         `<div class="swiper-slide">
           <img src="${img.src}" alt="${img.alt}" width="584" height="584"
             class="object-contain aspect-square" loading="lazy">
           </div>`
       );
 
-      thumbsSwiperEl.appendSlide(
+      thumbsSwiper.appendSlide(
         `<div class="swiper-slide w-fit h-fit">
           <img src="${img.src}" alt="${img.alt}" width="88" height="88"
             class="object-contain aspect-square" loading="lazy">
           </div>`
       ); 
     });
-    */
-
-    if (mainSwiperEl) mainSwiperEl.update();
-    if (thumbsSwiperEl) thumbsSwiperEl.update();
   }
 });

@@ -1,15 +1,18 @@
 {
   "scripts": {
-    "dev": "concurrently \"shopify theme dev\" \"vite build --watch\" \"npx @tailwindcss/cli -i ./assets/tailwind.input.css -o ./assets/tailwind.output.css --watch\"",
+    "dev": "concurrently \"shopify theme dev\" \"vite build --watch\"",
     "build": "vite build"
   },
   "dependencies": {
     "swiper": "^12.0.3"
   },
   "devDependencies": {
-    "vite": "^7.2.2",
     "@tailwindcss/cli": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.17",
+    "autoprefixer": "^10.4.22",
+    "concurrently": "^9.2.1",
+    "postcss": "^8.5.6",
     "tailwindcss": "^4.1.17",
-    "concurrently": "^9.2.1"
+    "vite": "^7.2.2"
   }
 }

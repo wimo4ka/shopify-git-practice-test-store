@@ -1,6 +1,6 @@
 {% comment %} {{ 'banner-product.css' | asset_url | stylesheet_tag }} {% endcomment %}
 
-{{ 'tailwind.output.css' | asset_url | stylesheet_tag }}
+{% comment %} {{ 'tailwind.output.css' | asset_url | stylesheet_tag }} {% endcomment %}
 {{ 'section-swiper.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'section-swiper.js' | asset_url }}" defer></script>
 <script src="{{ 'banner-product.js' | asset_url }}" defer></script>
@@ -21,31 +21,31 @@
   }
 {%- endstyle -%}
 
-<section class="banner-product section-{{ section.id }} section-{{ section.id }}-padding dark:bg-black relative">
-  <div class="page-width max-w-7xl p-1 mx-auto flex justify-end ">
+<section class="banner-product section-{{ section.id }} section-{{ section.id }}-padding tw:dark:bg-black tw:relative">
+  <div class="page-width tw:max-w-7xl tw:p-1 tw:mx-auto tw:flex tw:justify-end ">
     <button
       id="theme-toggle"
-      class="w-14 h-8 bg-gray-300 dark:bg-gray-700 rounded-full p-1 flex items-center transition-all duration-500 mb-4"
+      class="tw:w-14 tw:h-8 tw:bg-gray-300 tw:dark:bg-gray-700 tw:rounded-full tw:p-1 tw:flex tw:items-center tw:transition-all tw:duration-500 tw:mb-4"
       aria-label="Toggle dark mode"
     >
       <span
-        class="toggle-circle w-6 h-6 bg-white dark:bg-black rounded-full shadow-md flex items-center justify-center transform transition-all duration-500"
+        class="toggle-circle tw:w-6 tw:h-6 tw:bg-white tw:dark:bg-black tw:rounded-full tw:shadow-md tw:flex tw:items-center tw:justify-center tw:transform tw:transition-all tw:duration-500"
       >
-        <span class="w-4 h-4 text-yellow-500 dark:hidden">
+        <span class="tw:w-4 tw:h-4 tw:text-yellow-500 tw:dark:hidden">
           {{ 'icon-light.svg' | inline_asset_content  }}
         </span>
-        <span class="w-4 h-4 hidden dark:!block text-yellow-300">
+        <span class="tw:w-4 tw:h-4 tw:hidden tw:dark:block tw:text-yellow-300">
           {{ 'icon-dark.svg' | inline_asset_content }}
         </span>
       </span>
     </button>
   </div>
-  <div class="page-width max-w-7xl p-1 mx-auto">
+  <div class="page-width tw:max-w-7xl tw:p-1 tw:mx-auto">
     {%- liquid
       assign product = section.settings.product | default: product
     -%}
     {% if product != blank %}
-      <div class="gallary-intro-container !box-border flex gap-8 flex-col lg:flex-row">
+      <div class="gallary-intro-container tw:!box-border tw:flex tw:gap-8 tw:flex-col tw:lg:flex-row">
         {%- if product.has_only_default_variant -%}
           {% if product.featured_image != blank %}
             {{
@@ -54,32 +54,32 @@
               | image_tag:
                 alt: product.title,
                 loading: 'lazy',
-                class: 'main-image w-full lg:w-1/2 object-cover aspect-square'
+                class: 'main-image tw:w-full tw:lg:w-1/2 tw:object-cover tw:aspect-square'
             }}
           {% else %}
             {{
               'no-image.svg'
               | asset_url
-              | image_tag: alt: product.title, class: 'main-image w-full lg:w-1/2 object-cover aspect-square'
+              | image_tag: alt: product.title, class: 'main-image tw:w-full tw:lg:w-1/2 tw:object-cover tw:aspect-square'
             }}
           {%- endif -%}
         {%- else -%}
-          <div class="product-gallery-section w-full lg:w-1/2" data-media="{{ product.media | json | escape }}">
-            <div class="container mx-auto flex flex-col-reverse gap-2 w-full lg:flex-row">
+          <div class="product-gallery-section tw:w-full tw:lg:w-1/2" data-media="{{ product.media | json | escape }}">
+            <div class="container tw:mx-auto tw:flex tw:flex-col-reverse tw:gap-2 tw:w-full tw:lg:flex-row">
               {% comment %} Thumbs {% endcomment %}
-              <div class="swiper mySwiper w-full h-fit lg:h-[454px] lg:tw-h-454 lg:w-1/6">
-                <div class="swiper-wrapper h-full">
+              <div class="swiper mySwiper tw:w-full tw:h-fit tw:lg:h-[454px] tw:lg:h-454 tw:lg:w-1/6">
+                <div class="swiper-wrapper tw:h-full">
                   {%- unless product.images == blank -%}
                     {%- assign images_only = product.media | where: 'media_type', 'image' -%}
                     {%- assign filtered_images = images_only | where: 'alt', 'white' -%}
                     {% for image in filtered_images %}
-                      <div class="swiper-slide w-fit h-fit">
+                      <div class="swiper-slide tw:w-fit tw:h-fit">
                         <img
                           src="{{ image.src | image_url: width: 88 }}"
                           width="88"
                           height="88"
                           alt="{{ image.alt | escape }}"
-                          class="object-contain aspect-square"
+                          class="tw:object-contain tw:aspect-square"
                         >
                       </div>
                     {% endfor %}
@@ -88,8 +88,8 @@
               </div>
 
              {% comment %} Main Swiper {% endcomment %}
-              <div class="swiper mySwiper2 w-full h-fit lg:w-5/6 lg:h-[454px]">
-                <div class="swiper-wrapper h-full">
+              <div class="swiper mySwiper2 tw:w-full tw:h-fit tw:lg:w-5/6 tw:lg:h-[454px] tw:lg:h-454">
+                <div class="swiper-wrapper tw:h-full">
                   {%- assign images_only = product.media | where: 'media_type', 'image' -%}
                   {%- assign filtered_images = images_only | where: 'alt', 'white' -%}
                   {% for image in filtered_images %}
@@ -99,30 +99,30 @@
                         width="584"
                         height="584"
                         alt="{{ image.alt | escape }}"
-                        class="object-contain aspect-square"
+                        class="tw:object-contain tw:aspect-square"
                       >
                     </div>
                   {% endfor %}
                 </div>
-                <div class="swiper-button-next !hidden tw-h-454"></div>
-                <div class="swiper-button-prev !hidden"></div>
+                {% comment %} <div class="swiper-button-next tw:hidden"></div>
+                <div class="swiper-button-prev tw:hidden"></div> {% endcomment %}
               </div>
             </div>
           </div>
         {%- endif -%}
-        <div class="product-info w-full md:w-1/2 mx-auto lg:mx-0">
+        <div class="product-info tw:w-full tw:lg:w-1/2 tw:mx-auto tw:lg:mx-0">
           {% if product.title != blank %}
-            <h1 class="mb-4 dark:!text-white">{{- product.title -}}</h1>
+            <h1 class="tw:mb-4 tw:dark:!text-white">{{- product.title -}}</h1>
           {% endif %}
 
           {% capture product_price %}
             {{ product.selected_or_first_available_variant.price | money }}
           {% endcapture %}
-          <div class="product-price mb-2 text-inherit text-2xl dark:text-white" id="product-price">
+          <div class="product-price tw:mb-2 tw:text-inherit tw:text-2xl tw:dark:text-white" id="product-price">
             {{- product_price -}}
           </div>
 
-          <div class="stock mb-4 text-gray-500 text-base dark:text-white" id="product-stock">
+          <div class="stock tw:mb-4 tw:text-gray-500 tw:text-base tw:dark:text-white" id="product-stock">
             {% if product.selected_or_first_available_variant.inventory_management != blank %}
               {% if product.selected_or_first_available_variant.inventory_quantity > 1 %}
                 <span>
@@ -172,7 +172,7 @@
               {%- endfor -%}
 
               {% comment %} {# ——— Hidden select ——— #} {% endcomment %}
-              <select name="id" id="variant-select" class="hidden">
+              <select name="id" id="variant-select" class="tw:hidden">
                 {%- for variant in product.variants -%}
                   <option
                     value="{{ variant.id }}"
@@ -228,12 +228,12 @@
                 {% endif %}
               {% endif %}
 
-              <div class="custom-form-actions mb-4 w-full flex justify-center">
+              <div class="custom-form-actions tw:mb-4 tw:w-full tw:flex tw:justify-center">
                 <button
                   type="submit"
                   class="
-                    btn w-full max-w-3xs px-8 py-3 text-center font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 rounded-md focus:ring-offset-2 focus:ring-black
-                    disabled:opacity-25 disabled:cursor-not-allowed dark:bg-white dark:text-black dark:hover:bg-gray-200 dark:focus:ring-white
+                    tw:btn tw:w-full tw:max-w-3xs tw:px-8 tw:py-3 tw:text-center tw:font-medium tw:text-white tw:bg-black tw:hover:bg-gray-800 focus:tw:outline-none focus:tw:ring-2 tw:rounded-md focus:tw:ring-offset-2 focus:tw:ring-black
+                    disabled:tw:opacity-25 disabled:tw:cursor-not-allowed tw:dark:bg-white tw:dark:text-black tw:dark:hover:bg-gray-200 dark:focus:tw:ring-white
                   "
                   {% unless product.selected_or_first_available_variant.available %}
                     disabled
@@ -253,7 +253,7 @@
                 {% endunless %}
               </div>
               {% if product.description != blank %}
-                <div class="product-description text-brand-gray text-black font-medium text-base dark:text-white">
+                <div class="product-description tw:text-brand-gray tw:text-black tw:font-medium tw:text-base tw:dark:text-white">
                   {{ product.description }}
                 </div>
               {% endif %}
@@ -262,7 +262,7 @@
         </div>
       </div>
     {% else %}
-      <h2 class="banner-heading text-brand-gray text-black font-medium dark:text-white text-2xl text-center">
+      <h2 class="banner-heading tw:text-brand-gray tw:text-black tw:font-medium tw:dark:text-white tw:text-2xl tw:text-center">
         {{ 'product.banner.no_product' | t }}
       </h2>
     {% endif %}

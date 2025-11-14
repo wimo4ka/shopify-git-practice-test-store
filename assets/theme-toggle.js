@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
       document.documentElement.classList.add("dark");
-      circle.classList.add("translate-x-6");
+      circle.classList.add("tw:translate-x-6");
     }
 
     toggleBtn.addEventListener("click", () => {
@@ -15,6 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
       
       localStorage.setItem("theme", isDark ? "dark" : "light");
 
-      circle.classList.toggle("translate-x-6", isDark);
+      circle.classList.toggle("tw:translate-x-6", isDark);
     });
   });
