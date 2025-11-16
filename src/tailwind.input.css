@@ -1,0 +1,32 @@
+@import "tailwindcss" prefix(tw);
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --spacing: 4px;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 36px;
+  --text-5xl: 48px;
+  --text-5xl--line-height: 1;
+
+  --font-display: "Poppins", sans-serif;
+
+  --color-lightgray: #737373;
+}
+
+
+@layer components {
+  .banner-swiper-slide {
+    @apply tw:bg-gray-100 tw:!flex tw:items-center tw:justify-center tw:text-center tw:rounded-lg tw:shadow tw:p-0 tw:w-fit tw:h-fit tw:aspect-square tw:overflow-hidden;
+  }
+  .swiper {
+    @apply tw:overflow-hidden;
+  }
+}

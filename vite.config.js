@@ -1,19 +1,29 @@
-import { defineConfig } from 'vite';
-import path from 'path';
+import { defineConfig } from "vite";
+import path from "path";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  root: process.cwd(),
+  plugins: [tailwindcss()],
   build: {
-    outDir: 'assets',          
-    emptyOutDir: false,     
+    outDir: "assets",
+    emptyOutDir: false,
+    minify: false,
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'src/swiper-init.js'),
+        tailwind: path.resolve(__dirname, "src/tailwind.input.css"),
+        swiper: path.resolve(__dirname, "src/swiper-init.js"),
       },
       output: {
-        entryFileNames: 'section-swiper.js',
-        assetFileNames: 'section-swiper.css',
+        entryFileNames: (chunk) => {
+          return chunk.name === "swiper" ? "section-swiper.js" : "tailwind.js";
+        },
+        assetFileNames: (chunk) => {
+          return chunk.name === "tailwind.css"
+            ? "tailwind.output.css"
+            : "section-swiper.css";
+        },
       },
     },
   },
-});
+  },
+);

@@ -26,40 +26,22 @@ This project is built from scratch theme for Online Store 2.0.
 # Tailwind CSS Integration in Dawn Theme
 
 ## Task
-Integrate Tailwind CSS into the Dawn theme - https://tailwindcss.com/
+I# Product Recommendations Carousel
 
-## Branch
-`feat-tailwind` created in the test store.
+## Overview
 
-## Implemented Features
+This project implements a custom JavaScript component for product recommendations on Shopify: the **Recommendations Carousel**.
 
-- **banner-product section refactor**
-  - All styles rewritten using Tailwind CSS.
-  - `tailwind.config.js` added. Custom styles and `tw-` prefix did not apply correctly. Guidance on correct setup is welcome.
-  
-- **Swiper integration via Vite**
-  - Image gallery works with Swiper.
-  - Tailwind styles attempted for Swiper elements.
-  - **Open question:** How to access Swiper methods (`removeAllSlides()`, `appendSlide()`) in other JS files when initialized via Vite.
+## Features
 
-- **Theme toggle**
-  - Added a light/dark mode switch.
-  - Initially tried as a snippet, but caused constant local syncing. Added directly in the section instead.
+- **Tailwind CSS & Swiper:** Integrated via Vite with global Swiper initialization.  
+- **Shopify Setup:** App Search and Discovery added; some products have manual recommendations, others are AI-generated.  
+- **RecommendationsCarousel Component:** Asynchronous loading of recommendations based on the current product.  
+- **Page Integration:** Section `recommendations-carousel` added to the product page.  
+- **Custom Product Cards:** Moved to a separate snippet `custom-product-card`.  
+- **Styling:** All section and snippet styles implemented with Tailwind CSS.  
+- **Localization:** Translatable text elements via `t` in `en.default.json`; section schema translations via `t` in `en.schema.default.json`.  
+- **Documentation:** Added README with project description.  
+- **Pull Request:** Created in the `dev` branch with detailed description.
 
-## How to Build Tailwind + Vite
 
-1. Install dependencies:
-
-```bash
-npm install
-```
-
-2. Start development with Vite + Tailwind:
-```bash
-npm run dev
-```
-This runs:
-
-- Shopify theme development (shopify theme dev)
-- Vite build watcher (vite build --watch)
-- Tailwind CLI watcher to generate CSS:
