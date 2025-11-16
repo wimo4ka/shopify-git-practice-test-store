@@ -1,8 +1,7 @@
 {% comment %} {{ 'banner-product.css' | asset_url | stylesheet_tag }} {% endcomment %}
 
 {% comment %} {{ 'tailwind.output.css' | asset_url | stylesheet_tag }} {% endcomment %}
-{{ 'section-swiper.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'section-swiper.js' | asset_url }}" defer></script>
+
 <script src="{{ 'banner-product.js' | asset_url }}" defer></script>
 <script src="{{ 'theme-toggle.js' | asset_url }}" defer></script>
 
@@ -73,13 +72,13 @@
                     {%- assign images_only = product.media | where: 'media_type', 'image' -%}
                     {%- assign filtered_images = images_only | where: 'alt', 'white' -%}
                     {% for image in filtered_images %}
-                      <div class="swiper-slide tw:w-fit tw:h-fit">
+                      <div class="swiper-slide banner-swiper-slide tw:w-fit tw:h-fit">
                         <img
                           src="{{ image.src | image_url: width: 88 }}"
                           width="88"
                           height="88"
                           alt="{{ image.alt | escape }}"
-                          class="tw:object-contain tw:aspect-square"
+                          class="tw:object-cover tw:aspect-square"
                         >
                       </div>
                     {% endfor %}
@@ -93,13 +92,13 @@
                   {%- assign images_only = product.media | where: 'media_type', 'image' -%}
                   {%- assign filtered_images = images_only | where: 'alt', 'white' -%}
                   {% for image in filtered_images %}
-                    <div class="swiper-slide">
+                    <div class="swiper-slide banner-swiper-slide">
                       <img
                         src="{{ image.src | image_url: width: 600 }}"
                         width="584"
                         height="584"
                         alt="{{ image.alt | escape }}"
-                        class="tw:object-contain tw:aspect-square"
+                        class="tw:object-cover tw:aspect-square"
                       >
                     </div>
                   {% endfor %}

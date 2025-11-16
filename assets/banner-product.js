@@ -160,16 +160,16 @@ const thumbsSwiper = new Swiper(thumbsEl, {
 
     filteredImages.forEach((img) => {
       mainSwiper.appendSlide(
-        `<div class="swiper-slide">
+        `<div class="swiper-slide banner-swiper-slide">
           <img src="${img.src}" alt="${img.alt}" width="584" height="584"
-            class="object-contain aspect-square" loading="lazy">
+            class="tw:object-contain tw:aspect-square" loading="lazy">
           </div>`
       );
 
       thumbsSwiper.appendSlide(
-        `<div class="swiper-slide w-fit h-fit">
+        `<div class="swiper-slide banner-swiper-slide w-fit h-fit">
           <img src="${img.src}" alt="${img.alt}" width="88" height="88"
-            class="object-contain aspect-square" loading="lazy">
+            class="tw:object-contain tw:aspect-square" loading="lazy">
           </div>`
       ); 
     });
