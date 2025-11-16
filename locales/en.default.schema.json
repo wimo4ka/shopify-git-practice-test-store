@@ -3570,6 +3570,22 @@
           "label": "Select product"
         },
       }
-    }
+    },
+    "recommendations-carousel": {
+      "name": "Featured Collection",
+      "settings": {
+        "products_to_show": {
+          "label": "Product count"
+        },
+        "padding": {
+          "section_padding_heading": "Padding",
+          "padding_top": "Top",
+          "padding_bottom": "Bottom"
+        },
+      },
+      "presets": {
+        "name": "Product recomendations carousel"
+      }
+    },
   }
 }

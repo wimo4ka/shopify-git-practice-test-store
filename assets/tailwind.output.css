@@ -46,23 +46,24 @@
     --tw-color-gray-900: oklch(21% .034 264.665);
     --tw-color-black: #000;
     --tw-color-white: #fff;
-    --tw-spacing: .25rem;
+    --tw-spacing: 4px;
     --tw-container-3xs: 16rem;
     --tw-container-7xl: 80rem;
-    --tw-text-base: 1rem;
+    --tw-text-base: 16px;
     --tw-text-base--line-height: calc(1.5 / 1);
-    --tw-text-2xl: 1.5rem;
+    --tw-text-2xl: 24px;
     --tw-text-2xl--line-height: calc(2 / 1.5);
-    --tw-text-4xl: 2.25rem;
-    --tw-text-4xl--line-height: calc(2.5 / 2.25);
+    --tw-text-3xl: 30px;
+    --tw-text-3xl--line-height: calc(2.25 / 1.875);
+    --tw-font-weight-normal: 400;
     --tw-font-weight-medium: 500;
-    --tw-font-weight-bold: 700;
     --tw-radius-md: .375rem;
     --tw-radius-lg: .5rem;
     --tw-default-transition-duration: .15s;
     --tw-default-transition-timing-function: cubic-bezier(.4, 0, .2, 1);
     --tw-default-font-family: var(--tw-font-sans);
     --tw-default-mono-font-family: var(--tw-font-mono);
+    --tw-color-lightgray: #737373;
   }
 }
 
@@ -311,21 +312,10 @@
   [hidden]:where(:not([hidden="until-found"])) {
     display: none !important;
   }
-
-  body {
-    font-family: var(--tw-font-sans);
-  }
-
-  h1 {
-    font-size: var(--tw-text-4xl);
-    line-height: var(--tw-leading, var(--tw-text-4xl--line-height));
-    --tw-font-weight: var(--tw-font-weight-bold);
-    font-weight: var(--tw-font-weight-bold);
-  }
 }
 
 @layer components {
-  .swiper-slide {
+  .banner-swiper-slide {
     aspect-ratio: 1;
     border-radius: var(--tw-radius-lg);
     background-color: var(--tw-color-gray-100);
@@ -355,12 +345,20 @@
     margin-inline: auto;
   }
 
+  .tw\:mt-0 {
+    margin-top: calc(var(--tw-spacing) * 0);
+  }
+
   .tw\:mb-2 {
     margin-bottom: calc(var(--tw-spacing) * 2);
   }
 
   .tw\:mb-4 {
     margin-bottom: calc(var(--tw-spacing) * 4);
+  }
+
+  .tw\:mb-8 {
+    margin-bottom: calc(var(--tw-spacing) * 8);
   }
 
   .tw\:\!box-border {
@@ -395,6 +393,10 @@
     height: calc(var(--tw-spacing) * 8);
   }
 
+  .tw\:h-10 {
+    height: calc(var(--tw-spacing) * 10);
+  }
+
   .tw\:h-28 {
     height: calc(var(--tw-spacing) * 28);
   }
@@ -413,6 +415,10 @@
 
   .tw\:w-6 {
     width: calc(var(--tw-spacing) * 6);
+  }
+
+  .tw\:w-10 {
+    width: calc(var(--tw-spacing) * 10);
   }
 
   .tw\:w-14 {
@@ -442,6 +448,10 @@
   .tw\:translate-x-6 {
     --tw-translate-x: calc(var(--tw-spacing) * 6);
     translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+
+  .tw\:rotate-180 {
+    rotate: 180deg;
   }
 
   .tw\:transform {
@@ -490,6 +500,10 @@
 
   .tw\:rounded-full {
     border-radius: 3.40282e38px;
+  }
+
+  .tw\:rounded-lg {
+    border-radius: var(--tw-radius-lg);
   }
 
   .tw\:rounded-md {
@@ -554,14 +568,29 @@
     line-height: var(--tw-leading, var(--tw-text-2xl--line-height));
   }
 
+  .tw\:text-2xl\! {
+    font-size: var(--tw-text-2xl) !important;
+    line-height: var(--tw-leading, var(--tw-text-2xl--line-height)) !important;
+  }
+
   .tw\:text-base {
     font-size: var(--tw-text-base);
     line-height: var(--tw-leading, var(--tw-text-base--line-height));
   }
 
+  .tw\:text-base\! {
+    font-size: var(--tw-text-base) !important;
+    line-height: var(--tw-leading, var(--tw-text-base--line-height)) !important;
+  }
+
   .tw\:font-medium {
     --tw-font-weight: var(--tw-font-weight-medium);
     font-weight: var(--tw-font-weight-medium);
+  }
+
+  .tw\:font-normal\! {
+    --tw-font-weight: var(--tw-font-weight-normal) !important;
+    font-weight: var(--tw-font-weight-normal) !important;
   }
 
   .tw\:text-black {
@@ -574,6 +603,10 @@
 
   .tw\:text-inherit {
     color: inherit;
+  }
+
+  .tw\:text-lightgray {
+    color: var(--tw-color-lightgray);
   }
 
   .tw\:text-white {
@@ -631,6 +664,17 @@
   .tw\:focus\:outline-none:focus {
     --tw-outline-style: none;
     outline-style: none;
+  }
+
+  .tw\:aria-disabled\:\!opacity-0[aria-disabled="true"] {
+    opacity: 0 !important;
+  }
+
+  @media (min-width: 48rem) {
+    .tw\:md\:text-3xl\! {
+      font-size: var(--tw-text-3xl) !important;
+      line-height: var(--tw-leading, var(--tw-text-3xl--line-height)) !important;
+    }
   }
 
   @media (min-width: 64rem) {

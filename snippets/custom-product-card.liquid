@@ -1,0 +1,48 @@
+{%- comment -%}
+  snippets/custom-product-card.liquid
+  Usage:
+    {%- render 'custom-product-card', product: product, show_price: true, show_rating: true, show_add_to_cart: true -%}
+{%- endcomment -%}
+<div
+  class="product-card tw:flex tw:flex-col"
+  data-product-id="{{ product.id }}"
+  data-price="{{ product.price }}"
+  data-title="{{ product.title | escape }}"
+>
+  <a href="{{ product.url  }}" aria-label="details {{ product.title | escape }}">
+    {%- if product.featured_image != blank -%}
+      {{
+        product.featured_image
+        | image_url: width: 400
+        | image_tag:
+          alt: product.title,
+          loading: 'lazy',
+          class: 'tw:w-full tw:object-cover tw:aspect-square tw:rounded-lg tw:mb-4'
+      }}
+    {%- else -%}
+      {{ 'product-2' | placeholder_svg_tag: 'Placeholder image',
+          class: 'tw:w-full tw:object-cover tw:aspect-square tw:rounded-lg tw:mb-4' }}
+    {%- endif -%}
+    <h3 class="tw:text-base! tw:text-black tw:mt-0 tw:mb-2 tw:font-medium">
+      {{- product.title | default: 'Product title' | escape -}}
+    </h3>
+  </a>
+  {%- if show_price -%}
+    <p class="product-price tw:text-lightgray tw:text-base tw:mb-2">
+      {%- if product.compare_at_price > product.price -%}
+        <s class="product-price--original">{{ product.compare_at_price | money_with_currency }}</s>
+        <span class="product-price--sale"
+          >From
+          {{ product.price | money_with_currency }}
+        </span>
+      {%- else -%}
+        <span class="product-price--regular">{{ product.price | money_with_currency }}</span>
+      {%- endif -%}
+    </p>
+  {%- endif -%}
+  {%- if show_rating -%}
+    <div class="product-card__rating">
+      ⭐ {{ product.metafields.reviews.rating.value | default: '5.0' -}}
+    </div>
+  {%- endif -%}
+</div>

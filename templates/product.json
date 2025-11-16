@@ -82,8 +82,8 @@
         "padding_bottom": 12
       }
     },
-    "product-inquiry": {
-      "type": "product-inquiry"
+    "recommendations-carousel": {
+      "type": "recommendations-carousel",
     },
     "related-products": {
       "type": "related-products",
@@ -102,11 +102,15 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
-    }
+    },
+    "product-inquiry": {
+      "type": "product-inquiry",
+    },
   },
   "order": [
     "main",
-    "product-inquiry",
-    "related-products"
+    "recommendations-carousel",
+    "related-products",
+    "product-inquiry"
   ]
 }
