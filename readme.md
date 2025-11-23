@@ -26,22 +26,48 @@ This project is built from scratch theme for Online Store 2.0.
 # Tailwind CSS Integration in Dawn Theme
 
 ## Task
-I# Product Recommendations Carousel
+Theme Optimization
 
 ## Overview
 
-This project implements a custom JavaScript component for product recommendations on Shopify: the **Recommendations Carousel**.
+This task focused on improving performance, visual consistency, and user experience across the Shopify theme through image optimization, responsive adjustments, and UI refinements.
 
-## Features
+## Key Improvements
+1. Above-the-Fold Image Optimization
 
-- **Tailwind CSS & Swiper:** Integrated via Vite with global Swiper initialization.  
-- **Shopify Setup:** App Search and Discovery added; some products have manual recommendations, others are AI-generated.  
-- **RecommendationsCarousel Component:** Asynchronous loading of recommendations based on the current product.  
-- **Page Integration:** Section `recommendations-carousel` added to the product page.  
-- **Custom Product Cards:** Moved to a separate snippet `custom-product-card`.  
-- **Styling:** All section and snippet styles implemented with Tailwind CSS.  
-- **Localization:** Translatable text elements via `t` in `en.default.json`; section schema translations via `t` in `en.schema.default.json`.  
-- **Documentation:** Added README with project description.  
-- **Pull Request:** Created in the `dev` branch with detailed description.
+- Added fetchpriority="high" to the main banner image to improve LCP.
+- Removed loading="lazy" from all above-the-fold images to ensure instant rendering of critical content.
+
+2. Lazy Loading for Non-Critical Images
+
+- Applied loading="lazy" to all images below the first screen.
+- Reduced network load and improved initial page speed.
+
+3. Responsive Layout Enhancements
+
+- Reviewed and refined all major sections for mobile (320px), tablet (768px), and desktop (1280px).
+- Improved spacing, alignment, and consistency across breakpoints.
+- Ensured clean layout and predictable behavior on real devices.
+
+4. Featured Products: Horizontal Scroll Removed
+
+- Eliminated problematic horizontal scroll.
+- Rebuilt the section using Swiper for smoother, mobile-friendly navigation.
+
+5. Unified Image Rendering in Liquid
+
+- All images now rendered using image_tag for full control over attributes and optimization.
+- Exceptions: images dynamically inserted via JavaScript.
+
+## Additional Fututre Improvements
+Mobile-Optimized Image Sizes (Recommended)
+
+Considering adding different width or sizes attributes for mobile screens to reduce image payload.
+
+## XBWishlist App Integration
+
+- Installed and connected to the theme.
+- Verified correct display and functionality within relevant sections.
+
 
 
