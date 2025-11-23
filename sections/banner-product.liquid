@@ -2,6 +2,9 @@
 
 {% comment %} {{ 'tailwind.output.css' | asset_url | stylesheet_tag }} {% endcomment %}
 
+<script src="{{ 'banner-product.js' | asset_url }}" defer></script>
+<script src="{{ 'theme-toggle.js' | asset_url }}" defer></script>
+
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -93,7 +96,11 @@
                       {{
                         image
                         | image_url: width: 584
-                        | image_tag: alt: image.alt, class: 'tw:object-cover tw:aspect-square'
+                        | image_tag: alt: image.alt, 
+                        fetchpriority: forloop.first ? 'high' : 'auto',
+                        loading: forloop.first ? 'eager' : 'lazy',
+                        class: 'tw:object-cover tw:aspect-square',
+                        
                       }}
                     </div>
                   {% endfor %}
@@ -264,8 +271,6 @@
     {% endif %}
   </div>
 </section>
-<script src="{{ 'banner-product.js' | asset_url }}" defer></script>
-<script src="{{ 'theme-toggle.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -304,3 +309,5 @@
   ]
 }
 {% endschema %}
+
+
