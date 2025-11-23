@@ -25,7 +25,7 @@
   data-section-id="{{ section.id }}"
   data-collection-handle="{{ target_collection.handle }}"
 >
-  <div class="featured-products__container container">
+  <div class="featured-products__container container page-width">
     {%- if section.settings.heading != blank -%}
       <h2 class="featured-products__heading">{{ section.settings.heading }}</h2>
     {%- endif -%}
@@ -54,73 +54,79 @@
     {%- endif -%}
 
     <div class="featured-products-grid">
-      <div class="scroll-content">
-        {%- for product in target_collection.products limit: section.settings.products_count -%}
-          <div
-            class="product-card"
-            data-product-id="{{ product.id }}"
-            data-price="{{ product.price }}"
-            data-title="{{ product.title | escape }}"
-          >
-            <a href="{{ product.url  }}" aria-label="details {{ product.title | escape }}">
-              {%- if product.featured_image != blank -%}
-                {{ product.featured_image | image_url: width: 400 | image_tag: alt: product.title }}
-              {%- else -%}
-                {{ 'product-2' | placeholder_svg_tag: 'Placeholder image' }}
-              {%- endif -%}
-              <h3>{{- product.title | default: 'Product title' | escape -}}</h3>
-            </a>
-            {%- if section.settings.show_price -%}
-              <p class="product-price">
-                {%- if product.compare_at_price > product.price -%}
-                  <s class="product-price--original">{{ product.compare_at_price | money_with_currency }}</s>
-                  <span class="product-price--sale"
-                    >From
-                    {{ product.price | money_with_currency }}
-                  </span>
+      <div class="swiper productsSwiper">
+        <div class="swiper-wrapper">
+          {%- for product in target_collection.products limit: section.settings.products_count -%}
+            <div
+              class="swiper-slide product-card"
+              data-product-id="{{ product.id }}"
+              data-price="{{ product.price }}"
+              data-title="{{ product.title | escape }}"
+            >
+              <a href="{{ product.url  }}" aria-label="details {{ product.title | escape }}">
+                {%- if product.featured_image != blank -%}
+                  {{ product.featured_image | image_url: width: 400 | image_tag: alt: product.title, loading: 'lazy' }}
                 {%- else -%}
-                  <span class="product-price--regular">{{ product.price | money_with_currency }}</span>
+                  {{ 'product-2' | placeholder_svg_tag: 'Placeholder image' }}
                 {%- endif -%}
-              </p>
-            {%- endif -%}
-            {%- if section.settings.show_rating -%}
-              <div class="product-card__rating">⭐ {{ product.metafields.reviews.rating.value | default: '5.0' }}</div>
-            {%- endif -%}
-            {%- if section.settings.show_add_to_cart and product.available -%}
-              {% assign first_variant = product.first_available_variant %}
-              <form
-                class="add-to-cart-form"
-                action="{{ routes.cart_add_url }}"
-                method="post"
-                data-section-id="{{ section.id }}"
-              >
-                <input type="hidden" name="id" value="{{ first_variant.id }}">
-
-                <button
-                  type="submit"
-                  id="add-to-cart-{{ first_variant.id }}"
-                  class="product-card__btn"
-                  data-product-id="{{ product.variants.first.id }}"
-                  data-quick-view
-                  data-product-handle="{{ product.handle }}"
-                  aria-label="Add {{ product.title | escape }} to cart"
-                  {%- if product.selected_or_first_available_variant.available == false
-                    or product.selected_or_first_available_variant == null
-                  -%}
-                    disabled
+                <h3>{{- product.title | default: 'Product title' | escape -}}</h3>
+              </a>
+              {%- if section.settings.show_price -%}
+                <p class="product-price">
+                  {%- if product.compare_at_price > product.price -%}
+                    <s class="product-price--original">{{ product.compare_at_price | money_with_currency }}</s>
+                    <span class="product-price--sale"
+                      >From
+                      {{ product.price | money_with_currency }}
+                    </span>
+                  {%- else -%}
+                    <span class="product-price--regular">{{ product.price | money_with_currency }}</span>
                   {%- endif -%}
+                </p>
+              {%- endif -%}
+              {%- if section.settings.show_rating -%}
+                <div class="product-card__rating">
+                  ⭐ {{ product.metafields.reviews.rating.value | default: '5.0' }}
+                </div>
+              {%- endif -%}
+              {%- if section.settings.show_add_to_cart and product.available -%}
+                {% assign first_variant = product.first_available_variant %}
+                <form
+                  class="add-to-cart-form"
+                  action="{{ routes.cart_add_url }}"
+                  method="post"
+                  data-section-id="{{ section.id }}"
                 >
-                  {%- if product.selected_or_first_available_variant.available == false
-                    or product.selected_or_first_available_variant == null
-                  -%}
-                    {{ 'featured-products.cart.sold-out' | t: default: 'Sold Out' }}
-                  {%- endif -%}
-                  {{ 'featured-products.cart.add-to-cart' | t: default: 'Add To Cart' }}
-                </button>
-              </form>
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
+                  <input type="hidden" name="id" value="{{ first_variant.id }}">
+
+                  <button
+                    type="submit"
+                    id="add-to-cart-{{ first_variant.id }}"
+                    class="product-card__btn"
+                    data-product-id="{{ product.variants.first.id }}"
+                    data-quick-view
+                    data-product-handle="{{ product.handle }}"
+                    aria-label="Add {{ product.title | escape }} to cart"
+                    {%- if product.selected_or_first_available_variant.available == false
+                      or product.selected_or_first_available_variant == null
+                    -%}
+                      disabled
+                    {%- endif -%}
+                  >
+                    {%- if product.selected_or_first_available_variant.available == false
+                      or product.selected_or_first_available_variant == null
+                    -%}
+                      {{ 'featured-products.cart.sold-out' | t: default: 'Sold Out' }}
+                    {%- endif -%}
+                    {{ 'featured-products.cart.add-to-cart' | t: default: 'Add To Cart' }}
+                  </button>
+                </form>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        {% comment %} <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div> {% endcomment %}
       </div>
     </div>
   </div>
