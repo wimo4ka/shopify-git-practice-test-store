@@ -5,6 +5,7 @@
 <script src="{{ 'banner-product.js' | asset_url }}" defer></script>
 <script src="{{ 'theme-toggle.js' | asset_url }}" defer></script>
 
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -31,7 +32,7 @@
         class="toggle-circle tw:w-6 tw:h-6 tw:bg-white tw:dark:bg-black tw:rounded-full tw:shadow-md tw:flex tw:items-center tw:justify-center tw:transform tw:transition-all tw:duration-500"
       >
         <span class="tw:w-4 tw:h-4 tw:text-yellow-500 tw:dark:hidden">
-          {{ 'icon-light.svg' | inline_asset_content  }}
+          {{ 'icon-light.svg' | inline_asset_content }}
         </span>
         <span class="tw:w-4 tw:h-4 tw:hidden tw:dark:block tw:text-yellow-300">
           {{ 'icon-dark.svg' | inline_asset_content }}
@@ -52,14 +53,15 @@
               | image_url: width: 600
               | image_tag:
                 alt: product.title,
-                loading: 'lazy',
                 class: 'main-image tw:w-full tw:lg:w-1/2 tw:object-cover tw:aspect-square'
             }}
           {% else %}
             {{
               'no-image.svg'
-              | asset_url
-              | image_tag: alt: product.title, class: 'main-image tw:w-full tw:lg:w-1/2 tw:object-cover tw:aspect-square'
+              | asset_url: width: 600
+              | image_tag:
+                alt: product.title,
+                class: 'main-image tw:w-full tw:lg:w-1/2 tw:object-cover tw:aspect-square'
             }}
           {%- endif -%}
         {%- else -%}
@@ -73,38 +75,40 @@
                     {%- assign filtered_images = images_only | where: 'alt', 'white' -%}
                     {% for image in filtered_images %}
                       <div class="swiper-slide banner-swiper-slide tw:w-fit tw:h-fit">
-                        <img
-                          src="{{ image.src | image_url: width: 88 }}"
-                          width="88"
-                          height="88"
-                          alt="{{ image.alt | escape }}"
-                          class="tw:object-cover tw:aspect-square"
-                        >
+                        {{
+                          image
+                          | image_url: width: 88
+                          | image_tag: alt: image.alt, class: 'tw:object-cover tw:aspect-square'
+                        }}
                       </div>
                     {% endfor %}
                   {%- endunless -%}
                 </div>
               </div>
 
-             {% comment %} Main Swiper {% endcomment %}
+              {% comment %} Main Swiper {% endcomment %}
               <div class="swiper mySwiper2 tw:w-full tw:h-fit tw:lg:w-5/6 tw:lg:h-[454px] tw:lg:h-454">
                 <div class="swiper-wrapper tw:h-full">
                   {%- assign images_only = product.media | where: 'media_type', 'image' -%}
                   {%- assign filtered_images = images_only | where: 'alt', 'white' -%}
                   {% for image in filtered_images %}
                     <div class="swiper-slide banner-swiper-slide">
-                      <img
-                        src="{{ image.src | image_url: width: 600 }}"
-                        width="584"
-                        height="584"
-                        alt="{{ image.alt | escape }}"
-                        class="tw:object-cover tw:aspect-square"
-                      >
+                      {{
+                        image
+                        | image_url: width: 584
+                        | image_tag: alt: image.alt, 
+                        fetchpriority: forloop.first ? 'high' : 'auto',
+                        loading: forloop.first ? 'eager' : 'lazy',
+                        class: 'tw:object-cover tw:aspect-square',
+                        
+                      }}
                     </div>
                   {% endfor %}
                 </div>
-                {% comment %} <div class="swiper-button-next tw:hidden"></div>
-                <div class="swiper-button-prev tw:hidden"></div> {% endcomment %}
+                {% comment %}
+                  <div class="swiper-button-next tw:hidden"></div>
+                  <div class="swiper-button-prev tw:hidden"></div>
+                {% endcomment %}
               </div>
             </div>
           </div>
@@ -231,8 +235,8 @@
                 <button
                   type="submit"
                   class="
-                    tw:btn tw:w-full tw:max-w-3xs tw:px-8 tw:py-3 tw:text-center tw:font-medium tw:text-white tw:bg-black tw:hover:bg-gray-800 focus:tw:outline-none focus:tw:ring-2 tw:rounded-md focus:tw:ring-offset-2 focus:tw:ring-black
-                    disabled:tw:opacity-25 disabled:tw:cursor-not-allowed tw:dark:bg-white tw:dark:text-black tw:dark:hover:bg-gray-200 dark:focus:tw:ring-white
+                    tw:btn tw:w-full tw:max-w-3xs tw:px-8 tw:py-3 tw:text-center tw:font-medium tw:text-white tw:bg-black tw:hover:bg-gray-800 focus:tw:outline-none tw:focus:ring-2 tw:rounded-md focus:tw:ring-offset-2 focus:tw:ring-black
+                    tw:disabled:opacity-25 tw:disabled:cursor-not-allowed tw:dark:bg-white tw:dark:text-black tw:dark:hover:bg-gray-200 tw:dark:focus:ring-white
                   "
                   {% unless product.selected_or_first_available_variant.available %}
                     disabled
@@ -305,3 +309,5 @@
   ]
 }
 {% endschema %}
+
+

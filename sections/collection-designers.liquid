@@ -19,7 +19,7 @@
 {% assign designers = target_collection.metafields.custom.designers.value %}
 
 <section class="collection-designers section-{{ section.id }} section-{{ section.id }}-padding">
-  <div class="container">
+  <div class="container page-width">
     {%- if target_collection == blank -%}
       <h2 class="no-collection">{{- 'collection-designers.no-collection' | t | default: 'We are working for you, wait something new is comming...' -}}</h2>
     {%- else -%}
@@ -31,7 +31,7 @@
           {%- for designer in designers -%}
             <div class="designer-card">
               {%- if section.settings.show_designer_img and designer.avatar != blank -%}
-                {{ designer.avatar | image_url: width: 400 | image_tag: alt: designer.name }}
+                {{ designer.avatar | image_url: width: 400 | image_tag: alt: designer.name, loading: 'lazy' }}
               {%- else -%}
                 {{ 'hero-apparel-1' | placeholder_svg_tag: 'Placeholder image' }}
               {%- endif -%}

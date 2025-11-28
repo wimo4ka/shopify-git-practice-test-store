@@ -8,6 +8,7 @@ export default defineConfig({
     outDir: "assets",
     emptyOutDir: false,
     minify: false,
+    cssMinify: true,
     rollupOptions: {
       input: {
         tailwind: path.resolve(__dirname, "src/tailwind.input.css"),

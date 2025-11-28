@@ -29,19 +29,19 @@ ul {
 
 .designer-card-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 16px;
 }
 
-@media (max-width: 750px) {
+@media (min-width: 768px) {
   .designer-card-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 400px) {
+@media (min-width: 1024px) {
   .designer-card-grid {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

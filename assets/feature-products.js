@@ -2,7 +2,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const section = document.querySelector("[data-section-id]");
   const sectionId = section.dataset.sectionId;
   const sortSelect = document.getElementById(`sort-by-${sectionId}`);
-  const grid = document.querySelector(".scroll-content");
+  const grid = document.querySelector(".productsSwiper .swiper-wrapper");
+
+  const swiperEl = section.querySelector(".productsSwiper")
+
+  const productSwiper = new Swiper(swiperEl, {
+    direction: "horizontal",
+    spaceBetween: 8,
+    slidesPerView: 1,
+    navigation: {
+      nextEl: swiperEl.querySelector(".swiper-button-next"),
+      prevEl: swiperEl.querySelector(".swiper-button-prev"),
+    },
+    breakpoints: {
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 8,
+      },
+      1024: {
+        slidesPerView: 5,
+        spaceBetween: 8,
+      },
+    },
+  });
 
   const content = document.querySelector(".quick-view__content");
 
@@ -11,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Sort products function
   function sortProducts(sortValue) {
     const productCards = Array.from(grid.querySelectorAll(".product-card"));
-
     productCards.sort((a, b) => {
       switch (sortValue) {
         case "price-low":
