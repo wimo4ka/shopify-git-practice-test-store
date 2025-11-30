@@ -26,48 +26,114 @@ This project is built from scratch theme for Online Store 2.0.
 # Tailwind CSS Integration in Dawn Theme
 
 ## Task
-Theme Optimization
+Theme Accessibility
 
 ## Overview
 
-This task focused on improving performance, visual consistency, and user experience across the Shopify theme through image optimization, responsive adjustments, and UI refinements.
+This update enhances accessibility (a11y), Swiper integration, variant-based gallery switching, and HTML validity across multiple product UI components in the Shopify theme.
 
-## Key Improvements
-1. Above-the-Fold Image Optimization
+The work focused on:
+- updating the image gallery when selecting a color,
+- proper aria-attribute usage,
+- accessibility improvements for Swiper buttons,
+- fixing W3C Validator errors,
+- optimizing alt text,
+- correcting label ↔ form control associations,
+- resolving warnings in the product card.
 
-- Added fetchpriority="high" to the main banner image to improve LCP.
-- Removed loading="lazy" from all above-the-fold images to ensure instant rendering of critical content.
+---
 
-2. Lazy Loading for Non-Critical Images
+## 🚀 Implemented Functionality
 
-- Applied loading="lazy" to all images below the first screen.
-- Reduced network load and improved initial page speed.
+### **1. Color-Based Product Gallery Updates**
+- Implemented a JS function `updateGalleryByColor(color)` that:
+  - filters images by color using `media.alt`,
+  - removes existing slides,
+  - appends new slides to both mainSwiper and thumbsSwiper,
+  - updates accessibility attributes:
+    - `aria-label`,
+    - `aria-pressed`,
+    - `aria-current`.
 
-3. Responsive Layout Enhancements
+### **2. Thumbnail Button Accessibility (Swiper)**
+- Each thumbnail button now includes:
+  - `type="button"`
+  - `aria-label="Show image X"`
+  - `aria-pressed="false"`
 
-- Reviewed and refined all major sections for mobile (320px), tablet (768px), and desktop (1280px).
-- Improved spacing, alignment, and consistency across breakpoints.
-- Ensured clean layout and predictable behavior on real devices.
+- When a slide becomes active:
+  - active thumbnail gets `aria-pressed="true"`,
+  - all others become `aria-pressed="false"`,
+  - `aria-current="true"` is assigned to the active item.
 
-4. Featured Products: Horizontal Scroll Removed
+This ensures proper screen reader behavior and keyboard accessibility.
 
-- Eliminated problematic horizontal scroll.
-- Rebuilt the section using Swiper for smoother, mobile-friendly navigation.
+---
 
-5. Unified Image Rendering in Liquid
+## 🏷 3. Variant Picker Accessibility
 
-- All images now rendered using image_tag for full control over attributes and optimization.
-- Exceptions: images dynamically inserted via JavaScript.
+### **3.1 Labels & Radiogroups**
+- Added:
+  - `role="radiogroup"`
+  - `aria-labelledby="label-color"`
+- Labels are now correctly associated via `id`.
 
-## Additional Fututre Improvements
-Mobile-Optimized Image Sizes (Recommended)
+### **3.2 Fix: “Orphaned form label”**
+The issue occurred because the label did not directly correspond to a form control.  
+Resolved by:
 
-Considering adding different width or sizes attributes for mobile screens to reduce image payload.
+- letting the label describe the entire radiogroup (not a single input),
+- ensuring each variant button has `role="radio"`.
 
-## XBWishlist App Integration
+### **3.3 Hidden Select Label Fix**
+- Added `aria-labelledby="label-color"` to the hidden `<select>`.
+- Fully resolves Lighthouse “Select missing label”.
 
-- Installed and connected to the theme.
-- Verified correct display and functionality within relevant sections.
+---
 
+## 🖼 4. Product Card Improvements
 
+### 4.1 ALT Text Fix
+Resolved Lighthouse warning: **Suspicious alternative text**  
+Logic implemented:
+- decorative images → `alt=""`,
+- alt text no longer duplicates product titles,
+- placeholder images use meaningful alt text (e.g., `"Placeholder image"`).
 
+All validation issues have been fixed:
+
+### ✔ Orphaned form label  
+Label now correctly associated with a radiogroup.
+
+### ✔ Select missing label  
+Hidden select receives an accessible label through `aria-labelledby`.
+
+### ✔ Suspicious alternative text  
+All alt attributes rewritten to follow accessibility best practices.
+
+### ✔ Role mismatches  
+`role="radio"` added correctly.
+
+---
+
+## 📦 Result
+After all improvements:
+
+- The gallery correctly updates on color selection.
+- Swiper thumbnails support full aria interaction (`aria-pressed`, `aria-current`).
+- All labels have valid associations.
+- The hidden select now has a proper accessible name.
+- ALT text is optimized and no longer triggers warnings.
+- All W3C Validator errors have been resolved.
+- Overall accessibility, SEO, and UX have significantly improved.
+
+---
+
+## 💻 Technologies Used
+- **Shopify Liquid**
+- **Vanilla JavaScript**
+- **Swiper.js**
+- **Tailwind CSS**
+- **ARIA Accessibility Patterns**
+
+---
