@@ -24,6 +24,7 @@
   class="featured-products section-{{ section.id }}-padding"
   data-section-id="{{ section.id }}"
   data-collection-handle="{{ target_collection.handle }}"
+  title="{{section.name | escape}}"
 >
   <div class="featured-products__container container page-width">
     {%- if section.settings.heading != blank -%}
@@ -32,7 +33,9 @@
 
     {%- if target_collection != blank -%}
       {% comment %} Sorting dropdown {% endcomment %}
-      <small>{{- 'featured-products.select.sort_by' | t | default: 'Sort by:' -}}</small>
+      <label for="sort-by-{{ section.id }}" class="featured-products__label">
+        <small>{{- 'featured-products.select.sort_by' | t | default: 'Sort by:' -}}</small>
+      </label>
       <select
         id="sort-by-{{ section.id }}"
         name="sort-by"
@@ -65,7 +68,8 @@
             >
               <a href="{{ product.url  }}" aria-label="details {{ product.title | escape }}">
                 {%- if product.featured_image != blank -%}
-                  {{ product.featured_image | image_url: width: 400 | image_tag: alt: product.title, loading: 'lazy' }}
+                  {% assign alt_text = product.title | append: ' view' %}
+                  {{ product.featured_image | image_url: width: 400 | image_tag: alt: alt_text, loading: 'lazy' }}
                 {%- else -%}
                   {{ 'product-2' | placeholder_svg_tag: 'Placeholder image' }}
                 {%- endif -%}

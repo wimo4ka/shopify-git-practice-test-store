@@ -6,7 +6,7 @@
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
-  
+
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
@@ -17,6 +17,7 @@
 
 <section
   class="promo-banners color-{{ section.settings.color_scheme }} section-{{ section.id }}-padding"
+  title="{{section.name | escape}}"
 >
   <div class="container page-width">
     <div class="promo-banners__header-wrapper text-alignment-{{ section.settings.text_alignment }}">
@@ -36,17 +37,17 @@
               aspect-ratio: {{ block.settings.aspect_ratio  | replace: '_', '/' }};
             }
           </style>
-          <div class="promo-banners__item promo-banners__item-{{ block.settings.aspect_ratio }}">
+          <div class="promo-banners__item promo-banners__item-{{ block.settings.aspect_ratio }}"  title="{{ block.settings.title | escape }}">
             {%- if block.settings.image != blank -%}
-                 <img 
-                  src="{{ block.settings.image | image_url: width: 800 }}" 
-                  alt="{{ block.settings.title | escape }}"
-                  width=""
-                  height=""
-                >
-              {%- else -%}
-                {{ 'product-3' | placeholder_svg_tag: 'placeholder-svg' }}
-              {%- endif -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 800 }}"
+                alt="{{ block.settings.title | escape }}"
+                width=""
+                height=""
+              >
+            {%- else -%}
+              {{ 'product-3' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
 
             <div class="promo-banners__content">
               {% if block.settings.title %}
@@ -228,4 +229,3 @@
   ]
 }
 {% endschema %}
-

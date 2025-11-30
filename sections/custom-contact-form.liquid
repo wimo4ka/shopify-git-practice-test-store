@@ -18,6 +18,7 @@
 <section
   class="contact-form-section section-{{ section.id }} section-{{ section.id }}-padding"
   aria-labelledby="contact-form-title"
+  title="{{section.name | escape}}"
 >
   <div class="container">
     {%- if section.settings.heading != blank -%}
@@ -103,7 +104,7 @@
       </div>
 
       <div class="form-field">
-        <label htmlFor="message">{{ 'custom-contact.form.message' | t }}</label>
+        <label for="custom_contact_form-message">{{ 'custom-contact.form.message' | t }}</label>
         <textarea
           name="contact[body]"
           rows="10"
