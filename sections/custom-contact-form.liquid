@@ -18,6 +18,7 @@
 <section
   class="contact-form-section section-{{ section.id }} section-{{ section.id }}-padding"
   aria-labelledby="contact-form-title"
+  title="{{section.name | escape}}"
 >
   <div class="container">
     {%- if section.settings.heading != blank -%}
