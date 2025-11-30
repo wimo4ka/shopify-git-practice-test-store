@@ -5,7 +5,6 @@
 <script src="{{ 'banner-product.js' | asset_url }}" defer></script>
 <script src="{{ 'theme-toggle.js' | asset_url }}" defer></script>
 
-
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -21,7 +20,10 @@
   }
 {%- endstyle -%}
 
-<section class="banner-product section-{{ section.id }} section-{{ section.id }}-padding tw:dark:bg-black tw:relative" title="{{section.name | escape}}">
+<section
+  class="banner-product section-{{ section.id }} section-{{ section.id }}-padding tw:dark:bg-black tw:relative"
+  title="{{section.name | escape}}"
+>
   <div class="page-width tw:max-w-7xl tw:p-1 tw:mx-auto tw:flex tw:justify-end ">
     <button
       id="theme-toggle"
@@ -65,7 +67,12 @@
             }}
           {%- endif -%}
         {%- else -%}
-          <div class="product-gallery-section tw:w-full tw:lg:w-1/2" data-media="{{ product.media | json | escape }}">
+          <div
+            class="product-gallery-section tw:w-full tw:lg:w-1/2"
+            data-media="{{ product.media | json | escape }}"
+            role="group"
+            aria-label="Product image gallery"
+          >
             <div class="container tw:mx-auto tw:flex tw:flex-col-reverse tw:gap-2 tw:w-full tw:lg:flex-row">
               {% comment %} Thumbs {% endcomment %}
               <div class="swiper mySwiper tw:w-full tw:h-fit tw:lg:h-[454px] tw:lg:h-454 tw:lg:w-1/6">
@@ -75,11 +82,30 @@
                     {%- assign filtered_images = images_only | where: 'alt', 'white' -%}
                     {% for image in filtered_images %}
                       <div class="swiper-slide banner-swiper-slide tw:w-fit tw:h-fit">
-                        {{
-                          image
-                          | image_url: width: 88
-                          | image_tag: alt: image.alt, class: 'tw:object-cover tw:aspect-square'
-                        }}
+                        <button
+                          type="button"
+                          class="
+                            tw:appearance-none
+                            tw:bg-transparent
+                            tw:border-0
+                            tw:p-0
+                            tw:m-0
+                            tw:cursor-pointer
+                            tw:focus:outline-none
+                            tw:focus:ring-2
+                            tw:focus:ring-black
+                          "
+                          aria-label="Show image {{ forloop.index }}"
+                          aria-pressed="{{ forloop.first }}"
+                        >
+                          {% assign alt_text = image.alt | append: forloop.index %}
+                          {{
+                            image
+                            | image_url: width: 88
+                            | image_tag: alt: alt_text
+                            | default: product.title, class: 'tw:object-cover tw:aspect-square'
+                          }}
+                        </button>
                       </div>
                     {% endfor %}
                   {%- endunless -%}
@@ -92,15 +118,13 @@
                   {%- assign images_only = product.media | where: 'media_type', 'image' -%}
                   {%- assign filtered_images = images_only | where: 'alt', 'white' -%}
                   {% for image in filtered_images %}
-                    <div class="swiper-slide banner-swiper-slide">
+                    <div class="swiper-slide banner-swiper-slide tw:w-fit tw:h-fit">
+                      {% assign alt_text2 = image.alt | append: forloop.index %}
                       {{
                         image
                         | image_url: width: 584
-                        | image_tag: alt: image.alt, 
-                        fetchpriority: forloop.first ? 'high' : 'auto',
-                        loading: forloop.first ? 'eager' : 'lazy',
-                        class: 'tw:object-cover tw:aspect-square',
-                        
+                        | image_tag: alt: alt_text2
+                        | default: product.title, class: 'tw:object-cover tw:aspect-square'
                       }}
                     </div>
                   {% endfor %}
@@ -194,7 +218,7 @@
                               {{ variant.inventory_quantity }}
                               {{ 'product.banner.unit' | t }}
                           {% else %}
-                              {{ 'product.banner.not_available' | t }}
+                              {{- 'product.banner.not_available' | t -}}
                           {% endif %}
                       {% else %}
                           {% if variant.available -%}
@@ -309,5 +333,3 @@
   ]
 }
 {% endschema %}
-
-

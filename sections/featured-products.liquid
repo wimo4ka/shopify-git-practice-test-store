@@ -68,7 +68,7 @@
             >
               <a href="{{ product.url  }}" aria-label="details {{ product.title | escape }}">
                 {%- if product.featured_image != blank -%}
-                  {% assign alt_text = product.title | append: ' product image' %}
+                  {% assign alt_text = product.title | append: ' view' %}
                   {{ product.featured_image | image_url: width: 400 | image_tag: alt: alt_text, loading: 'lazy' }}
                 {%- else -%}
                   {{ 'product-2' | placeholder_svg_tag: 'Placeholder image' }}

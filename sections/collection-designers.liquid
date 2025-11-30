@@ -31,7 +31,8 @@
           {%- for designer in designers -%}
             <div class="designer-card">
               {%- if section.settings.show_designer_img and designer.avatar != blank -%}
-                {{ designer.avatar | image_url: width: 400 | image_tag: alt: designer.name, loading: 'lazy' }}
+                {% assign alt_text = designer.name | append: ' photo' %}
+                {{ designer.avatar | image_url: width: 400 | image_tag: alt: alt_text, loading: 'lazy' }}
               {%- else -%}
                 {{ 'hero-apparel-1' | placeholder_svg_tag: 'Placeholder image' }}
               {%- endif -%}

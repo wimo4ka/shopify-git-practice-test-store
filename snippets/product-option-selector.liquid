@@ -6,8 +6,8 @@
 {%- endcomment -%}
 
 {% if option != blank %}
-  <label 
-    class="option-label tw:mb-4 tw:text-brand-gray tw:text-black tw:font-medium tw:dark:text-white"
+  <h2 
+    class="option-label tw:text-brand-gray! tw:font-medium! tw:dark:text-white! tw:text-base!"
     id="label-{{ option_type }}"
   >
     {% case option_type %}
@@ -18,7 +18,7 @@
       {% else %}
         {{ option.name }}
     {% endcase %}
-  </label>
+  </h2>
 
   <div
     role="radiogroup"

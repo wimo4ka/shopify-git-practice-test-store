@@ -21,6 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedSize = sizeInput ? sizeInput.value : null;
 
   const section = document.querySelector(".product-gallery-section");
+  const thumbs = section.querySelectorAll(
+    ".mySwiper .swiper-wrapper .banner-swiper-slide button"
+  );
   if (!section) return;
 
   const thumbsEl = section.querySelector(".mySwiper");
@@ -171,9 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Update gallery images based on selected color
   function updateGalleryByColor(color) {
-    const section = document.querySelector(".product-gallery-section");
-    if (!section) return;
-
     const productMedia = JSON.parse(section.dataset.media);
     const filteredImages = productMedia.filter(
       (media) =>
@@ -184,24 +184,38 @@ document.addEventListener("DOMContentLoaded", () => {
     mainSwiper.removeAllSlides();
     thumbsSwiper.removeAllSlides();
 
-    filteredImages.forEach((img) => {
-      mainSwiper.appendSlide(
-        `<div class="swiper-slide banner-swiper-slide">
-          <img src="${img.src}" alt="${img.alt}" width="584" height="584"
-            class="tw:object-contain tw:aspect-square" loading="lazy">
-          </div>`
-      );
+    filteredImages.forEach((img, index) => {
+      mainSwiper.appendSlide(`
+      <div class="swiper-slide banner-swiper-slide">
+        <img src="${img.src}" alt="${img.alt}${index + 1}" width="584" height="584"
+          class="tw:object-contain tw:aspect-square" loading="${
+            index === 0 ? "eager" : "lazy"
+          }">
+      </div>
+    `);
 
-      thumbsSwiper.appendSlide(
-        `<div class="swiper-slide banner-swiper-slide w-fit h-fit">
-          <img src="${img.src}" alt="${img.alt}" width="88" height="88"
-            class="tw:object-contain tw:aspect-square" loading="lazy">
-          </div>`
-      );
+      thumbsSwiper.appendSlide(`
+      <div class="swiper-slide banner-swiper-slide w-fit h-fit">
+        <button
+          type="button"
+          class="tw:appearance-none tw:bg-transparent tw:border-0 tw:p-0 tw:m-0 tw:cursor-pointer tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-black"
+          aria-label="Show image ${index + 1}: ${img.alt}"
+          aria-pressed="${index === 0 ? "true" : "false"}"
+        >
+          <img src="${img.src}" alt="${img.alt}${index + 1}" width="88" height="88"
+            class="tw:object-cover tw:aspect-square" loading="lazy">
+        </button>
+      </div>
+    `);
     });
+
+    thumbsSwiper.update();
+    mainSwiper.update();
+
+    initThumbsAccessibility();
   }
 
-  // Helper for ARIA updates
+  // Helper for ARIA updates radio (variant select)
   function updateAriaState(buttons, activeBtn) {
     buttons.forEach((btn) => {
       const isActive = btn === activeBtn;
@@ -239,4 +253,53 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  // Add accessibility to thumbs ---
+  function initThumbsAccessibility() {
+    const thumbButtons = section.querySelectorAll(
+      ".mySwiper .swiper-wrapper .banner-swiper-slide button"
+    );
+    if (!thumbButtons.length) return;
+
+    thumbButtons.forEach((btn, index) => {
+      // Start state
+      btn.setAttribute("aria-pressed", index === 0 ? "true" : "false");
+      btn.setAttribute("tabindex", index === 0 ? "0" : "-1");
+
+      // Click
+      btn.addEventListener("click", () => {
+        updateThumbsAria(thumbButtons, btn);
+      });
+
+      // Keyboard
+      btn.addEventListener("keydown", (e) => {
+        let newIndex = index;
+
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") newIndex++;
+        if (e.key === "ArrowLeft" || e.key === "ArrowUp") newIndex--;
+
+        if (newIndex < 0) newIndex = thumbButtons.length - 1;
+        if (newIndex >= thumbButtons.length) newIndex = 0;
+
+        if (e.key === " " || e.key === "Enter") {
+          e.preventDefault();
+          btn.click();
+        }
+
+        if (newIndex !== index) {
+          thumbButtons[newIndex].focus();
+        }
+      });
+    });
+  }
+
+  // --- Update aria-pressed for thumbs ---
+  function updateThumbsAria(buttons, activeBtn) {
+    buttons.forEach((btn) => {
+      btn.setAttribute("aria-pressed", btn === activeBtn ? "true" : "false");
+      btn.setAttribute("tabindex", btn === activeBtn ? "0" : "-1");
+    });
+  }
+
+  initThumbsAccessibility();
 });
